@@ -96,9 +96,9 @@ int totalZoneUnfinished(Zone* list, int len);
 int totalZoneFinished(Zone* list, int len);
 
 //MOSTRAR
-//int printZoneList(Zone* list, int len, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
+//int printZoneList(Zone* list, int len);
 //
-//int printZone(Zone zone, Censista censista, Location location);
+//int printZone(Zone zone);
 
 //INFORMES
 

@@ -146,11 +146,23 @@ int printLocation(Location location){
 	int retorno = -1;//FALSE
 
 		if(location.isEmpty == FULL){
-			printf("%d \t%-7s \t%-7s  \t%-7s \t%-7s \t%-7s\n",
+			printf("%d \t|%-15s \t|%-15s  \t|%-15s \t|%-15s \t|%-15s\n",
 			location.id, location.name, location.street_1, location.street_2, location.street_3, location.street_4);
 		}
 		retorno = 0;//TRUE
 
 	return retorno;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -501,18 +501,14 @@ float percentageAbsentZone(Zone* list, int len){
 }
 
 //MOSTRAR
-//int printZoneList(Zone* list, int len, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
+//int printZoneList(Zone* list, int len){
 //
 //	int retorno = -1;//FALSE
-//	char titleZona[250];
-//	char titleZonaFinished[250];
 //
-//	strcpy(titleZona, "ID \tLOCACION \t\t\tCENSISTA  \t\t\t\tCALLES  \tESTADO\n");
-//	strcpy(titleZonaFinished, "ID \tLOCACION \t\t\tCENSISTA  \t\t\t\tCALLES  \tF.PRESENCIAL  \tF.VIRTUAL  \tAUSENTES  \tESTADO\n");
-//	if(list !=NULL && len > 0 && listCensista !=NULL && lenCensista > 0 && listLocation !=NULL && lenLocation > 0){
+//	if(list !=NULL && len > 0){
 //		for(int i = 0; i < len; i++){
-//			if(list[i].isEmpty == FULL && list[i].location == listLocation[i].id){
-//				printZone(list[i], listCensista[i], listLocation[i]);
+//			if(list[i].isEmpty == FULL){
+//				printZone(list[i]);
 //				retorno = 0;//TRUE
 //			}
 //		}
@@ -520,29 +516,31 @@ float percentageAbsentZone(Zone* list, int len){
 //	return retorno;
 //}
 //
-//int printZone(Zone zone, Censista censista, Location location){
+//int printZone(Zone zone){
 //
 //	int retorno = -1;//FALSE
 //
 //	if(zone.isEmpty == FULL){
-//		if(censista.idZone == EMPTY){
-//			printf("%d \t%-7s \t%-7s  \t%-7s \t%-7s \t%-7s \tSIN ASIGNAR \t%-7d  \t%-7d   \t%-7d  \tPENDIENTE\n",
-//			zone.id, location.name, location.street_1, location.street_2, location.street_3, location.street_4,
-//			zone.paperForm, zone.virtualForm, zone.absent);
-//		}else{
-//			switch(zone.state){
-//			case PENDIENTE:
-//				printf("%d \t%-7s \t%-7s  \t%-7s \t%-7s \t%-7s \t%-7s %s \t%-7d  \t%-7d   \t%-7d  \tPENDIENTE\n",
-//				zone.id, location.name, location.street_1, location.street_2, location.street_3, location.street_4,
-//				censista.name, censista.lastName, zone.paperForm, zone.virtualForm, zone.absent);
-//				break;
-//			case FINALIZADO:
-//				printf("%d \t%-7s \t%-7s  \t%-7s \t%-7s \t%-7s \t%-7s %s \t%d  \t%-7d   \t%-7d  \tPENDIENTE\n",
-//				zone.id, location.name, location.street_1, location.street_2, location.street_3, location.street_4,
-//				censista.name, censista.lastName, zone.paperForm, zone.virtualForm, zone.absent);
-//				break;
-//			}
+//
+//		if(zone.location == EMPTY){//no puede existir
+//			printf("%d \t%-7s \t%-7s  \t%-7s \t%-7s \t%-7s \t%-7s %s \t%-7d  \t%-7d   \t%-7d  \tPENDIENTE\n",
+//			zone.id, zone.location, zone.idCensista, zone.paperForm, zone.virtualForm, zone.absent, zone.totalAdd);
 //		}
+//		if(zone.idCensista == EMPTY){
+//					printf("%d \t%-7s \t%-7s  \t%-7s \t%-7s \t%-7s \t%-7s %s \t%-7d  \t%-7d   \t%-7d  \tPENDIENTE\n",
+//					zone.id, zone.location, zone.idCensista, zone.paperForm, zone.virtualForm, zone.absent, zone.totalAdd);
+//				}
+//		switch(zone.state){
+//		case PENDIENTE:
+//			printf("%d \t%-7s \t%-7s  \t%-7s \t%-7s \t%-7s \t%-7s %s \t%-7d  \t%-7d   \t%-7d  \tPENDIENTE\n",
+//			zone.id, zone.location, zone.idCensista, zone.paperForm, zone.virtualForm, zone.absent, zone.totalAdd);
+//			break;
+//		case FINALIZADO:
+//			printf("%d \t%-7s \t%-7s  \t%-7s \t%-7s \t%-7s \t%-7s %s \t%d  \t%-7d   \t%-7d  \tPENDIENTE\n",
+//					zone.id, zone.location, zone.idCensista, zone.paperForm, zone.virtualForm, zone.absent, zone.totalAdd);
+//			break;
+//		}
+//
 //		retorno = 0;//TRUE
 //	}
 //	return retorno;

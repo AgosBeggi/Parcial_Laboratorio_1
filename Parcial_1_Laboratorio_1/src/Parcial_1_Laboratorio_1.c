@@ -62,7 +62,7 @@ int main(void) {
 	int option_aux;
 
 	char titleListCensista[250];
-	strcpy(titleListCensista, "ID \tNOMBRE \t\t\tAPELLIDO  \tFECHA NAC. \tEDAD \tDIRECCION  \t\tBARRIO  \tESTADO\n");
+	strcpy(titleListCensista, "ID \t|NOMBRE \t\t|APELLIDO  \t\t|FECHA NAC. \t|EDAD \t|DIRECCION  \t\t|BARRIO  \t\t|ZONA  \t\t|ESTADO\n");
 
 	char messageOk[250];
 	strcpy(messageOk, "Operación exitosa");
@@ -71,19 +71,20 @@ int main(void) {
 	strcpy(optiondModifyCensista, "¿Qué desea modificar?\n1. NOMBRE\n2. APELLIDO\n3. EDAD\n4. FECHA DE NACIMIENTO\n5. DIRECCION\n");
 
 	char titleLocation[250];
-	strcpy(titleLocation, "ID \tLOCACION \tCALLE 1  \tCALLE 2  \tCALLE 3  \tCALLE 4\n");
+	strcpy(titleLocation, "ID \t|LOCALIDAD \t\t|CALLE 1  \t\t|CALLE 2  \t\t|CALLE 3  \t\t|CALLE 4\n");
 
-	char titleZone[250];
-	strcpy(titleZone, "ID \tLOCACION \t\t\tCENSISTA  \t\t\t\tCALLES  \t\t\t\tESTADO\n");
+	char titleZoneLocation[250];
+	strcpy(titleZoneLocation, "ID \t|LOCALIDAD \t\t|CENSISTA  \t\t\t|ESTADO\n");
+
 	char titleZoneFinished[250];
-	strcpy(titleZoneFinished, "ID \tLOCALIDAD \t\tCALLE 1  \t\tCALLE 2  \t\tCALLE 3  \t\tCALLE 4  \t\tCENSISTA  \tPRES  \tVIR  \tAUS  \tESTADO\n");
+	strcpy(titleZoneFinished, "ID \t|LOCALIDAD  \t\t|CENSISTA  \t|PRES  \t|VIR  \t|AUS  \t|TOTAL  \t|ESTADO\n");
 
 	if(startMenu(listCensista, ELEMENTS, listZone, ELEMENTS) == 0){
-		puts("-----------------------------------------------------------------------------------------------------");
+		puts("------------------------------------------------------------------------------------------------------------------------------------------");
 		puts("\t\t\t\t\t\tBIENVENIDO");
-		puts("-----------------------------------------------------------------------------------------------------");
+		puts("------------------------------------------------------------------------------------------------------------------------------------------");
 		puts("(Presiona 0 para carga automática)");
-		puts("-----------------------------------------------------------------------------------------------------");
+		puts("------------------------------------------------------------------------------------------------------------------------------------------");
 
 		do{
 
@@ -99,16 +100,16 @@ int main(void) {
 			puts("8. MOSTRAR ZONAS");
 			puts("9. INFORMES");
 			puts("10. SALIR");
-			puts("-----------------------------------------------------------------------------------------------------");
+			puts("------------------------------------------------------------------------------------------------------------------------------------------");
 			if(getInt("", &option) == 0){
-				puts("-----------------------------------------------------------------------------------------------------");
+				puts("------------------------------------------------------------------------------------------------------------------------------------------");
 
 				switch(option){
 					case 0:
 						if(hardcodeAddDataMenu(listCensista, ELEMENTS, listDate, ELEMENTS, listAddress, ELEMENTS, listZone, ELEMENTS, listLocation, ELEMENTS)){
 							printf("%s\n", messageOk);
 						}
-						puts("-----------------------------------------------------------------------------------------------------");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 					break;
 					case 1:
 						//CARGA DE CENSISTA
@@ -127,24 +128,26 @@ int main(void) {
 						getString("BARRIO: ", neighborhood);
 
 						if(singUpCensistaMenu(listCensista, ELEMENTS, name, lastName, age, day, month, year, street, streetNumber, neighborhood, listDate, ELEMENTS, listAddress, ELEMENTS) == 0){
-							puts("-----------------------------------------------------------------------------------------------------");
+							puts("------------------------------------------------------------------------------------------------------------------------------------------");
 							printf("%s\n", messageOk);
 						}
-						puts("-----------------------------------------------------------------------------------------------------");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						break;
 					case 2:
 						//MODIFICAR CENSISTA
-						printf("%s", titleListCensista);
+						printf("\n%s", titleListCensista);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						printCensistaList(listCensista, ELEMENTS);
-						puts("-----------------------------------------------------------------------------------------------------");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						getInt("Ingrese el id del censista que desea modificar\n", &idNumber);
 
 						indexCensista = findCensistaById(listCensista, ELEMENTS, idNumber);
 
 						puts("Usted eligio: \n\n");
 						printf("%s", titleListCensista);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						printCensista(listCensista[indexCensista]);
-						puts("-----------------------------------------------------------------------------------------------------");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 
 						puts("\n¿Desea continuar?\n");
 						puts("1. SI");
@@ -216,21 +219,23 @@ int main(void) {
 								break;
 							}
 						}
-						puts("-----------------------------------------------------------------------------------------------------");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						break;
 					case 3:
 						//BAJA DE CENSISTA
-						printf("%s", titleListCensista);
+						printf("\n%s", titleListCensista);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						printCensistaList(listCensista, ELEMENTS);
-						puts("-----------------------------------------------------------------------------------------------------");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						getInt("Ingrese el id del censista que desea eliminar\n", &idNumber);
 
 						indexCensista = findCensistaById(listCensista, ELEMENTS, idNumber);
 
 						puts("Usted eligio: \n\n");
 						printf("%s", titleListCensista);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						printCensista(listCensista[indexCensista]);
-						puts("-----------------------------------------------------------------------------------------------------");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 
 						puts("\n¿Desea continuar?\n");
 						puts("1. SI");
@@ -241,7 +246,7 @@ int main(void) {
 							printf("%s\n", messageOk);
 							}
 						}
-						puts("-----------------------------------------------------------------------------------------------------");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						break;
 					case 4:
 						//CARGA DE ZONA
@@ -254,22 +259,24 @@ int main(void) {
 						if(singUpZoneMenu(listZone, ELEMENTS,	nameLocation, street_1, street_2, street_3, street_4, listLocation, ELEMENTS) == 0){
 							printf("%s\n", messageOk);
 						}
-						puts("-----------------------------------------------------------------------------------------------------");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						break;
 					case 5:
 						//ASIGNAR ZONA
 						do{
-							printf("%s", titleLocation);
+							printf("\n%s", titleLocation);
+							puts("------------------------------------------------------------------------------------------------------------------------------------------");
 							printLocationList(listLocation, ELEMENTS);
-							puts("-----------------------------------------------------------------------------------------------------");
+							puts("------------------------------------------------------------------------------------------------------------------------------------------");
 							getInt("Ingrese el id de la localidad\n", &id_Location);
 
 							indexLocation = findLocationById(listLocation, ELEMENTS, id_Location);
 
 							puts("Usted eligio: \n\n");
 							printf("%s", titleLocation);
+							puts("------------------------------------------------------------------------------------------------------------------------------------------");
 							printLocation(listLocation[indexLocation]);
-							puts("-----------------------------------------------------------------------------------------------------");
+							puts("------------------------------------------------------------------------------------------------------------------------------------------");
 
 							puts("\n¿Desea continuar?\n");
 							puts("1. SI");
@@ -279,17 +286,19 @@ int main(void) {
 							if(optionLocation == 1){
 								optionLocation = -1;
 								do{
-									printf("%s", titleListCensista);
+									printf("\n%s", titleListCensista);
+									puts("------------------------------------------------------------------------------------------------------------------------------------------");
 									printCensistaList(listCensista, ELEMENTS);
-									puts("-----------------------------------------------------------------------------------------------------");
+									puts("------------------------------------------------------------------------------------------------------------------------------------------");
 									getInt("Ingrese el id del censista que desea asignar\n", &idNumber);
 
 									indexCensista = findCensistaById(listCensista, ELEMENTS, idNumber);
 
 									puts("Usted eligio: \n\n");
 									printf("%s", titleListCensista);
+									puts("------------------------------------------------------------------------------------------------------------------------------------------");
 									printCensista(listCensista[indexCensista]);
-									puts("-----------------------------------------------------------------------------------------------------");
+									puts("------------------------------------------------------------------------------------------------------------------------------------------");
 
 									puts("\n¿Desea continuar?\n");
 									puts("1. SI");
@@ -297,14 +306,14 @@ int main(void) {
 									getInt("", &optionCensista);
 									if(optionCensista == 1){
 										optionCensista = -1;
-										if(assignZoneMenu(listZone, ELEMENTS, listCensista, ELEMENTS, idNumber, listLocation, ELEMENTS, indexLocation) == 0){
+										if(assignZoneMenu(listZone, ELEMENTS, listCensista, ELEMENTS, idNumber, listLocation, ELEMENTS, id_Location) == 0){
 										printf("%s\n", messageOk);
 										}
 									}
 								}while(optionCensista != -1);
 							}
 						}while(optionLocation != -1);
-						puts("-----------------------------------------------------------------------------------------------------");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						break;
 					case 6:
 						//CARGA DE DATOS
@@ -317,19 +326,21 @@ int main(void) {
 						//int paperForm; cantidad ausentes
 
 
-						printf("%s", titleZoneFinished);
-						printListZoneCensistaList(listZone, ELEMENTS, listCensista, ELEMENTS, listLocation, ELEMENTS);
-						puts("-----------------------------------------------------------------------------------------------------");
+						printf("\n%s", titleZoneLocation);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
+						printZoneLocationCensistaList(listZone, ELEMENTS, listCensista, ELEMENTS, listLocation, ELEMENTS);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						getInt("Ingrese el id de la zona\n", &id_Zone);
 
 						indexZone = findZoneById(listZone, ELEMENTS, id_Zone);
-						indexCensista = findCensistaByZone(listCensista, ELEMENTS, id_Zone);
+						indexCensista = findCensistaByZone(listCensista, ELEMENTS, id_Zone);//no encuentra censista
 						indexLocation = findLocationByZone(listLocation, ELEMENTS, id_Zone);
 
 						puts("Usted eligio: \n\n");
-						printf("%s", titleZoneFinished);
-						printZoneCensistaList(listZone[indexZone], listCensista[indexCensista], listLocation[indexLocation]);
-						puts("-----------------------------------------------------------------------------------------------------");
+						printf("%s", titleZoneLocation);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
+						printZoneLocationCensista(listZone[indexZone], listCensista[indexCensista], listLocation[indexLocation]);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 
 						puts("\n¿Desea continuar?\n");
 						puts("1. SI");
@@ -346,25 +357,30 @@ int main(void) {
 										printf("%s\n", messageOk);
 							}
 						}
-						puts("-----------------------------------------------------------------------------------------------------");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						break;
 					case 7:
 						//MOSTRAR CENSISTAS
-						printf("%s", titleListCensista);
-						printCensistaList(listCensista, ELEMENTS);
-						puts("-----------------------------------------------------------------------------------------------------");
+						printf("\n%s", titleListCensista);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
+						printCensistaListMenu(listZone, ELEMENTS, listCensista, ELEMENTS, listLocation, ELEMENTS);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						break;
 					case 8:
 						//MOSTRAR ZONAS
-						puts("-----------------------------------------------------------------------------------------------------");
+						printf("\n%s", titleZoneLocation);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
+						printZoneLocationCensistaList(listZone, ELEMENTS, listCensista, ELEMENTS, listLocation, ELEMENTS);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						break;
 					case 9:
 						//INFORMES
-						puts("-----------------------------------------------------------------------------------------------------");
+						printZoneLocationCensistaList(listZone, ELEMENTS, listCensista, ELEMENTS, listLocation, ELEMENTS);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						break;
 					case 10:
 						puts("\t\t\t\t\t\tGRACIAS");
-						puts("-----------------------------------------------------------------------------------------------------");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						break;
 				}
 			}

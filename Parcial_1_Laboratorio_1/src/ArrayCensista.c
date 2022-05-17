@@ -75,6 +75,7 @@ int assignZoneToCensista(Censista* list, int len, int id_Censista, int zone){
 		for(int i = 0; i < len; i++){
 			if(i == index){
 				list[i].zone = zone;
+				list[i].state = ACTIVO;
 				retorno = 0;//TRUE
 			}
 		}
@@ -389,19 +390,20 @@ int printCensista(Censista censista){
 	if(censista.isEmpty == FULL){
 		switch(censista.state){
 			case ACTIVO:
-				printf("%d \t%-7s   \t%-5s \t%d/%d/%d  \t%d \t%-5s %d \t%-5s  \tACTIVO\n",
+				printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|ACTIVO\n",
 				censista.id, censista.name, censista.lastName,
 				censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year,
 				censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood);
 				break;
 			case LIBERADO:
-				printf("%d \t%-7s   \t%-5s \t%d/%d/%d  \t%d \t%-5s %d \t%-5s  \tLIBERADO\n",
+				printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|ACTIVO\n",
 				censista.id, censista.name, censista.lastName,
 				censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year,
 				censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood);
+
 				break;
 			case INACTIVO:
-				printf("%d \t%-7s   \t%-5s \t%d/%d/%d  \t%d \t%-5s %d \t%-5s  \tINACTIVO\n",
+				printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|INACTIVO\n",
 				censista.id, censista.name, censista.lastName,
 				censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year,
 				censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood);

@@ -47,8 +47,27 @@ int modificationsAddressMenu(Censista* listCensista, int lenCensista,	char stree
 int removeCensistaMenu(Censista* listCensista, int lenCensista,	int id, Date* listDate, int lenDate, Address* listAddress, int lenAddress);
 
 //MOSTRAR
-int printListZoneCensistaList(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
+int printZoneLocationCensistaList(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
 
-int printZoneCensistaList(Zone zone, Censista censista, Location location);
+int printZoneLocationCensistaDataList(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
+
+int printCensistaListMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
+
+int printZoneLocationCensista(Zone zone, Censista censista, Location location);
+
+int printZoneLocationCensistaData(Zone zone, Censista censista, Location location);
+
+//int printCensistaListMenu(Censista* list, int len);
+
+int printCensistaMenu(Censista censista, Zone zone, Location location);
 
 #endif /* MENU_H_ */
+
+
+
+
+
+
+
+
+
