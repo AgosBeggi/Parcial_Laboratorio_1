@@ -10,7 +10,7 @@
 //INICIALIZACIÓN
 int idZone(){
 
-	static int id = 0;
+	static int id = 3000;
 	id++;
 	return  id;
 }
@@ -24,6 +24,10 @@ int initZone(Zone* list, int len){
 		aux.isEmpty = EMPTY;
 		aux.idCensista = EMPTY;
 		aux.location = EMPTY;
+		aux.virtualForm = EMPTY;
+		aux.paperForm = EMPTY;
+		aux.absent = EMPTY;
+		aux.totalAdd = EMPTY;
 		for(int i = 0; i < len; i++){
 			list[i] = aux;
 			if(list[i].isEmpty == EMPTY){
@@ -91,6 +95,7 @@ int addDataZone(Zone* list, int len, int id, int virtualForm, int paperForm, int
 				list[i].paperForm = paperForm;
 				list[i].absent = absent;
 				list[i].totalAdd = totalAdd;
+				list[i].state = FINALIZADO;
 				retorno = 0;//TRUE
 			}
 		}
@@ -112,6 +117,22 @@ int findZoneById(Zone* list, int len, int id){
 		}
 	}
 	return index;
+}
+
+int findZoneIndexById(Zone* list, int len, int id, int* index){
+
+	int retorno = -1;//RETURNS AN ILLOGICAL VALUE
+
+	if(list !=NULL && len > 0 && id != -1){
+		for(int i = 0; i < len; i++){
+			if(list[i].id == id){
+				*index = i;//RETURNS POSITION OF ID FOUND
+				retorno = 0;
+				break;
+			}
+		}
+	}
+	return retorno;
 }
 
 int findZoneEmpty(Zone* list, int len){

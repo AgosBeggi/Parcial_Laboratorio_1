@@ -20,6 +20,16 @@ int isInt(char number[]){//OK
 	return retorno;
 }
 
+int isIntBetweenMinMax(int number, int min, int max){//OK
+
+	int retorno = 0;//TRUE
+
+	if(number <= min || number >= max){
+		retorno = -1;//FALSE
+	}
+	return retorno;
+}
+
 int isFloat(char number[]){//OK
 
 	int retorno = 0;//TRUE
@@ -45,13 +55,25 @@ int isChar(char character){//OK
 
 int isString(char chains[]){//OK
 
-	int retorno = -1;//TRUE
+	int retorno = -1;//FALSE
 
 	for (int i = 0; i < strlen(chains); i++){
-		if(isalpha(chains[i]) && chains[i] != 'ñ'){
+		if(isalpha(chains[i]) || chains[i] == 'ñ'){
 			chains[i] = toupper(chains[i]);
-			retorno = 0;//FALSE
-			//break;
+			retorno = 0;//TRUE
+		}
+	}
+	return retorno;
+}
+
+int areTheyStrings(char chains[]){//OK
+
+	int retorno = -1;//FALSE
+
+	for (int i = 0; i < strlen(chains); i++){
+		if(isalpha(chains[i])){
+			chains[i] = toupper(chains[i]);
+			retorno = 0;//TRUE
 		}
 	}
 	return retorno;

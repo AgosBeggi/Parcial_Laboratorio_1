@@ -14,6 +14,10 @@
 #define EMPTY 0
 #define FULL 1
 
+#define SIN_ASIGNAR 0
+#define ASIGNADO 1
+#define TERMINADO 2
+
 typedef struct{
 	int id;
 	int id_Zone;
@@ -22,6 +26,7 @@ typedef struct{
 	char street_2[150];
 	char street_3[150];
 	char street_4[150];
+	int state;
 	int isEmpty;
 }Location;
 
@@ -38,7 +43,9 @@ int addLocationZone(Location* listLocation, int lenLocation, int id_Location, in
 //BUSQUEDA
 int findLocationEmpty(Location* listLocation, int lenLocation);
 
-int findLocationById(Location* list, int len, int id);
+int findLocationById(Location* list, int len, int id, int* index);
+
+int findLocationIndexByIdZone(Location* list, int len, int id_zone, int* index);
 
 int findLocationByZone(Location* list, int len, int id_Zone);
 

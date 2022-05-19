@@ -24,10 +24,9 @@ int hardcodeAddDataMenu(Censista* listCensista, int lenCensista, Date* listDate,
 		Zone* listZone, int lenZone, Location* listLocation, int lenLocation){
 
 	int retorno = -1;//FALSE
-	//int flag = -1;
 	int control = 0;
 	int j = 0;
-	//int index;
+	int index;
 
 	char name[10][150]={"LOURDES IVANA", "HERNAN FACUNDO", "SILVIA ELIZABETH", "BRIAN EMANUEL", "GIULIANA", "IARA ANABELA", "ALOMA MAGALI", "MARIANO JAVIER", "ALEXIS JAVIER", "NICOLAS AGUSTIN"};
 	char lastName[10][150]={"CALDERON", "IANELLO", "GONZALEZ", "MONTOYA", "OCAMPO", "PANCERA", "TABORDA", "TORRE", "VANDEVENDES", "ZAMUDIO"};
@@ -41,69 +40,33 @@ int hardcodeAddDataMenu(Censista* listCensista, int lenCensista, Date* listDate,
 	int streetNumber[10]={4624,387,15,7772,5004,337,459,27,536,789};
 	char neighborhood[10][150]={"LINIERS","CABALLITO", "VILLA DEVOTO", "SAN NICOLAS", "RETIRO", "CONSTITUCION", "FLORESTA", "CHACARITA", "BARRACAS", "BOEDO"};
 
-
-
 	char nameLocation[10][150]={"MERCEDES", "CHASCOMUS", "LOBOS", "SAAVEDRA", "ESCOBAR", "LA PLATA", "LUJAN", "QUILMES", "RAMALLO", "PILAR"};
 	char street_1[10][150]={"C. 104", "LIBRES DEL SUR", "AJO", "AV. GARCIA DEL RIO", "CORDOBA", "C. 45", "GRAL. PAZ", "ALEM", "OBLIGADO", "CATAMARCA"};
 	char street_2[10][150]={"C. 106", "CASEROS", "CHACABUCO", "AV. MELIAN", "FELIPE BOERO", "C. 14", "GRAL. LAS HERAS", "MORENO", "LAGRAVE", "ALSINA"};
 	char street_3[10][150]={"C. 13", "ALVEAR", "BARRACAS", "MANZANERAS", "BOLIVIA", "C. 46", "RAWSON", "GARIBALDI", "COLON", "HIPOLITO YRIGOYEN"};
 	char street_4[10][150]={"C. 15", "MAIPU", "LUIS LACOSTE", "WASHINGTON", "PATRICIAS MENDOCINAS", "C. 15", "ITUZAINGO", "LAVALLE", "TUCUMAN", "AMILCAR LUBO"};
 
-	if(listCensista != NULL && lenCensista > 0 && listDate !=NULL && lenDate > 0 && listAddress !=NULL && lenAddress > 0
-			&& listZone !=NULL && lenZone > 0 && listLocation !=NULL && lenLocation > 0){
-		for(; control < 10; control++){
-			if(singUpCensistaMenu(listCensista, lenCensista, name[j], lastName[j], age[j],
-					day[j], month[j], year[j], street[j], streetNumber[j], neighborhood[j],
-					listDate, lenDate, listAddress, lenAddress) &&
-			singUpZoneMenu(listZone, lenZone, nameLocation[j], street_1[j], street_2[j],
-					street_3[j], street_4[j], listLocation, lenLocation)){
-
-				//flag = 0;//TRUE
-			}
-			j++;
-		}
-//		if(flag == 0){
-//			index = findLocationEmpty(listLocation, lenLocation);
-//			index = index-1;
-//			if(hardcodeAssignDataMenu(listCensista, lenCensista, lenAddress,
-//			listZone, lenZone, listLocation, lenLocation, index)){
-//				retorno = 0;
-//			}
-//		}
-
-	}retorno = 0;
-	return retorno;
-}
-
-int hardcodeAssignDataMenu(Censista* listCensista, int lenCensista, int lenAddress,
-		Zone* listZone, int lenZone, Location* listLocation, int lenLocation, int index){
-
-	int retorno = -1;//FALSE
-	int control = 0;
-	int j = 0;
-
-	int id_Censista;
-	int id_Zone;
-
 	int virtualForm[10]={2,5,0,9,1,3,7,1,2,6};
 	int paperForm[10]={1,0,2,0,3,2,4,0,6,7};
 	int absent[10]={0,0,1,0,3,2,0,1,5,2};
 	int total[10]={3,5,3,9,7,7,11,6,13,15};
 
-	if(listCensista != NULL && lenCensista > 0 && lenAddress > 0
-				&& listZone !=NULL && lenZone > 0 && listLocation !=NULL && lenLocation > 0){
-
+	if(listCensista != NULL && lenCensista > 0 && listDate !=NULL && lenDate > 0 && listAddress !=NULL && lenAddress > 0
+			&& listZone !=NULL && lenZone > 0 && listLocation !=NULL && lenLocation > 0){
 		for(; control < 10; control++){
-			id_Zone = findIdZoneByLocation(listZone, lenZone, index);
-			id_Censista = findIdCensistaByZone(listCensista, lenCensista, id_Zone);
-			for(int i = 0; i < lenLocation; i++){
-				if(assignZoneMenu(listZone, lenZone, listCensista, lenCensista, id_Censista, listLocation, lenLocation, index)){
-					addDataMenu(listZone, lenZone, id_Zone, virtualForm[j], paperForm[j], absent[j], total[j]);
-					retorno = 0;//TRUE
-				}
+			if(singUpZoneMenu(listZone, lenZone, nameLocation[j], street_1[j], street_2[j],
+					street_3[j], street_4[j], listLocation, lenLocation) == 0){
+				index = findLocationEmpty(listLocation, lenLocation);
+			}
+			if(singUpCensistaMenu(listCensista, lenCensista, name[j], lastName[j], age[j],
+					day[j], month[j], year[j], street[j], streetNumber[j], neighborhood[j],
+					listDate, lenDate, listAddress, lenAddress) == 0){
+				assignZoneMenu(listZone, lenZone, listCensista, lenCensista, listCensista[control].id,
+								listLocation, lenLocation, index);
+				addDataMenu(listZone, lenZone, listZone[control].id, virtualForm[j], paperForm[j], absent[j], total[j]);
+				retorno = 0;
 			}
 			j++;
-			index--;
 		}
 	}
 	return retorno;
@@ -131,7 +94,7 @@ int singUpCensistaMenu(Censista* listCensista, int lenCensista,	char name[], cha
 		addDate(listDate, lenDate, id, day, month, year, indexDate);
 		addAddress(listAddress, lenAddress, id, street, streetNumber, neighborhood, indexAddress);
 
-		if(addCensista(listCensista, lenCensista, id, name, lastName, listDate[indexDate], age, listAddress[indexAddress])){
+		if(addCensista(listCensista, lenCensista, id, name, lastName, listDate[indexDate], age, listAddress[indexAddress]) == 0){
 			retorno = 0;//TRUE
 		}
 	}
@@ -150,11 +113,11 @@ int singUpZoneMenu(Zone* listZone, int lenZone,	char nameLocation[], char street
 			&& listLocation != NULL && lenLocation > 0){
 
 		id_Location = idLocation();
-		addLocation(listLocation, lenLocation, nameLocation, street_1, street_2, street_3, street_4, id_Location);
-
-		id = idZone();
-		if(addZone(listZone, lenZone, id, id_Location)){
+		if(addLocation(listLocation, lenLocation, nameLocation, street_1, street_2, street_3, street_4, id_Location) == 0){
+			id = idZone();
+			if(addZone(listZone, lenZone, id, id_Location) == 0){
 			retorno = 0;//TRUE
+			}
 		}
 	}
 	return retorno;
@@ -171,8 +134,9 @@ int assignZoneMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenC
 		indexZ = findZoneByLocation(listZone, lenZone, id_Location);
 
 		assignCensistaToZone(listZone, lenZone, id_Censista, id_Location, indexZ);
-		assignZoneToCensista(listCensista, lenCensista, id_Censista, indexZ);
+
 		id_Zone = findIdZoneByLocation(listZone, lenZone, id_Location);
+		assignZoneToCensista(listCensista, lenCensista, id_Censista, id_Zone);
 		addLocationZone(listLocation, lenLocation, id_Location, id_Zone);
 
 		retorno = 0;//TRUE
@@ -188,6 +152,22 @@ int addDataMenu(Zone* listZone, int lenZone, int id_Zone, int paperForm, int int
 		addDataZone(listZone, lenZone, id_Zone, intvirtualForm, paperForm, absent, totalAdd);
 		retorno = 0;//TRUE
 	}
+	return retorno;
+}
+
+int addDataLocationMenu(Location* listLocation, int lenLocation, int index){
+
+	int retorno = -1;//FALSE
+
+	if(listLocation !=NULL && lenLocation && index != -1){
+		for(int i = 0; i < lenLocation; i++){
+			if(i == index){
+				listLocation[i].state = TERMINADO;
+				retorno = 0;//TRUE
+			}
+		}
+	}
+	retorno = 0;//TRUE
 	return retorno;
 }
 
@@ -284,15 +264,48 @@ int removeCensistaMenu(Censista* listCensista, int lenCensista,	int id, Date* li
 		return retorno;
 }
 
+int checkStateAssignLocationList(Location* listLocation, int lenLocation, int index){
+
+	int retorno = -1;//FALSE
+
+	if(listLocation !=NULL && lenLocation > 0 && index != -1){
+		for(int i = 0; i < lenLocation; i++){
+			if(listLocation[i].isEmpty == FULL && listLocation[i].state == ASIGNADO){
+				retorno = 0;//TRUE
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+
+int checkStateFinishZoneList(Zone* listZone, int lenZone, int id_Zone){
+
+	int retorno = -1;//FALSE
+
+	if(listZone !=NULL && lenZone > 0 && id_Zone != -1){
+		for(int i = 0; i < lenZone; i++){
+			if(listZone[i].id == id_Zone){
+				if(listZone[i].state == FINALIZADO){
+					retorno = 0;//TRUE
+					break;
+				}
+			}
+		}
+	}
+	return retorno;
+}
+
+
 //MOSTRAR
-int printZoneLocationCensistaList(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
+int printZoneLocationList(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
 
 	int retorno = -1;//FALSE
 
 	if(listZone !=NULL && lenZone > 0 && listCensista !=NULL && lenCensista > 0 && listLocation !=NULL && lenLocation > 0){
 		for(int i = 0; i < lenZone; i++){
 			if(listZone[i].isEmpty == FULL && listZone[i].location == listLocation[i].id){
-				printZoneLocationCensista(listZone[i], listCensista[i], listLocation[i]);
+				printLocation23(listZone[i], listCensista[i], listLocation[i]);
 				retorno = 0;//TRUE
 			}
 		}
@@ -300,14 +313,29 @@ int printZoneLocationCensistaList(Zone* listZone, int lenZone, Censista* listCen
 	return retorno;
 }
 
-int printZoneLocationCensistaDataList(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
+int printZoneDataList(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
 
 	int retorno = -1;//FALSE
 
 	if(listZone !=NULL && lenZone > 0 && listCensista !=NULL && lenCensista > 0 && listLocation !=NULL && lenLocation > 0){
 		for(int i = 0; i < lenZone; i++){
 			if(listZone[i].isEmpty == FULL && listZone[i].location == listLocation[i].id){
-				printZoneLocationCensistaData(listZone[i], listCensista[i], listLocation[i]);
+				printZoneData(listZone[i], listCensista[i], listLocation[i]);
+				retorno = 0;//TRUE
+			}
+		}
+	}
+	return retorno;
+}
+
+int printAllZoneDataList(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
+
+	int retorno = -1;//FALSE
+
+	if(listZone !=NULL && lenZone > 0 && listCensista !=NULL && lenCensista > 0 && listLocation !=NULL && lenLocation > 0){
+		for(int i = 0; i < lenZone; i++){
+			if(listZone[i].isEmpty == FULL && listZone[i].location == listLocation[i].id){
+				printAllZoneData(listZone[i], listCensista[i], listLocation[i]);
 				retorno = 0;//TRUE
 			}
 		}
@@ -330,7 +358,7 @@ int printCensistaListMenu(Zone* listZone, int lenZone, Censista* listCensista, i
 	return retorno;
 }
 
-int printZoneLocationCensista(Zone zone, Censista censista, Location location){
+int printLocation23(Zone zone, Censista censista, Location location){
 
 	int retorno = -1;//FALSE
 
@@ -349,6 +377,7 @@ int printZoneLocationCensista(Zone zone, Censista censista, Location location){
 		case FINALIZADO:
 			printf("%d \t|%-15s \t|%-15s %-15s \t|FINALIZADO\n",
 			zone.id, location.name, censista.lastName, censista.name);
+			break;
 		}
 	}
 
@@ -357,27 +386,63 @@ int printZoneLocationCensista(Zone zone, Censista censista, Location location){
 	return retorno;
 }
 
-int printZoneLocationCensistaData(Zone zone, Censista censista, Location location){
+int printZoneData(Zone zone, Censista censista, Location location){
 
 	int retorno = -1;//FALSE
+	char auxName[250];
+
+	memmove(auxName, censista.lastName, sizeof(auxName));
+	strcat(auxName, ", ");
+	strcat(auxName, censista.name);
 
 	if(zone.isEmpty == FULL){
 
 		switch(zone.state){
 		case PENDIENTE:
 			if(zone.idCensista == EMPTY){
-				printf("%d \t|%-15s \t|SIN ASIGNAR	 \t|%-5d \t|%-5d \t|%-5d \t|%-5d  \t|PENDIENTE\n",
+				printf("%d \t|%-15s  \t|%-15s  \t|%-15s  \t|%-15s  \t|%-15s  \t|SIN ASIGNAR  \t\t\t|PENDIENTE\n",
+				zone.id, location.name,	location.street_1, location.street_2, location.street_3, location.street_4);
+			}else{
+				printf("%d \t|%-15s  \t|%-15s  \t|%-15s  \t|%-15s  \t|%-15s  \t|%-30s |PENDIENTE\n",
+				zone.id, location.name, location.street_1, location.street_2, location.street_3, location.street_4, auxName);
+			}
+			break;
+		case FINALIZADO:
+			printf("%d \t|%-15s  \t|%-15s  \t|%-15s  \t|%-15s  \t|%-15s  \t|%-30s |FINALIZADO\n",
+			zone.id, location.name, location.street_1, location.street_2, location.street_3, location.street_4, auxName);
+			break;
+		}
+		retorno = 0;//TRUE
+	}
+	return retorno;
+}
+
+int printAllZoneData(Zone zone, Censista censista, Location location){
+
+	int retorno = -1;//FALSE
+	char auxName[250];
+
+	memmove(auxName, censista.lastName, sizeof(auxName));
+	strcat(auxName, ", ");
+	strcat(auxName, censista.name);
+
+	if(zone.isEmpty == FULL){
+
+		switch(zone.state){
+		case PENDIENTE:
+			if(zone.idCensista == EMPTY){
+				printf("%d \t|%-15s \t|SIN ASIGNAR	 \t\t|%-5d\t|%-5d \t |%-5d   |%-5d |PENDIENTE\n",
 				zone.id, location.name,	zone.paperForm, zone.virtualForm, zone.absent, zone.totalAdd);
 			}else{
-				printf("%d \t|%-15s \t|%s %s \t|%-5d \t|%-5d \t|%-5d \t|%-5d  \t|PENDIENTE\n",
-				zone.id, location.name, censista.lastName, censista.name, zone.paperForm,
+				printf("%d \t|%-15s \t|%-25s \t|%-5d\t|%-5d \t |%-5d   |%-5d |PENDIENTE\n",
+				zone.id, location.name, auxName, zone.paperForm,
 				zone.virtualForm, zone.absent, zone.totalAdd);
 			}
 			break;
 		case FINALIZADO:
-			printf("%d \t|%-15s \t|%s %s \t|%-5d \t|%-5d \t|%-5d \t|%-5d  \t|FINALIZADO\n",
-			zone.id, location.name, censista.lastName, censista.name,
-			zone.paperForm, zone.virtualForm, zone.absent, zone.totalAdd);
+			printf("%d \t|%-15s \t|%-25s \t|%-5d\t|%-5d \t |%-5d   |%-5d |FINALIZADO\n",
+			zone.id, location.name, auxName, zone.paperForm,
+			zone.virtualForm, zone.absent, zone.totalAdd);
 		}
 	}
 
@@ -385,13 +450,6 @@ int printZoneLocationCensistaData(Zone zone, Censista censista, Location locatio
 
 	return retorno;
 }
-
-//int printCensistaListMenu(Censista* list, int len){
-//	int retorno = -1;//FALSE
-//		retorno = 0;//TRUE
-//
-//			return retorno;
-//}
 
 int printCensistaMenu(Censista censista, Zone zone, Location location){
 	int retorno = -1;//FALSE
@@ -406,11 +464,10 @@ int printCensistaMenu(Censista censista, Zone zone, Location location){
 					censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood,
 					location.name);
 				}else{
-					printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|%-10s  \t|ACTIVO\n",
+					printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|SIN ASIGNAR  \t|ACTIVO\n",
 					censista.id, censista.name, censista.lastName,
 					censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year,
-					censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood,
-					location.name);
+					censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood);
 				}
 				break;
 			case LIBERADO:
@@ -427,6 +484,6 @@ int printCensistaMenu(Censista censista, Zone zone, Location location){
 				break;
 		}
 		retorno = 0;//TRUE
-}
+	}
 		return retorno;
 }

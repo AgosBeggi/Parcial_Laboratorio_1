@@ -124,7 +124,7 @@ int modifyDateMonth(Date* list, int len, int idElement, int month){
 
 		for(int i = 0; i < len; i++){
 			if(list[i].idElement == idElement){
-				list[i].day = month;
+				list[i].month = month;
 				retorno = 0;//TRUE
 			}
 		}
@@ -140,7 +140,7 @@ int modifyDateYear(Date* list, int len, int idElement, int year){
 
 		for(int i = 0; i < len; i++){
 			if(list[i].idElement == idElement){
-				list[i].day = year;
+				list[i].year = year;
 				retorno = 0;//TRUE
 			}
 		}

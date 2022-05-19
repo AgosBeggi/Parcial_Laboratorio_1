@@ -17,6 +17,8 @@
 /// @return Returns 0 for true and -1 for false.
 int isInt(char number[]);
 
+int isIntBetweenMinMax(int number, int min, int max);
+
 /// @fn int isFloat(char[])
 /// @brief Analyze if the parameter is a digit
 /// or not, and if it has a decimal.
@@ -36,6 +38,8 @@ int isChar(char character);
 /// @param string
 /// @return Returns 0 for true and -1 for false.
 int isString(char string[]);
+
+int areTheyStrings(char chains[]);
 
 /// \fn int isStringAlnum(char[])
 /// \brief Analyze if the parameter is alphanumeric

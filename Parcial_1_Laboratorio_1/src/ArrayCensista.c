@@ -10,7 +10,7 @@
 //INICIALIZACIÓN
 int idCensista(){
 
-	static int id = 0;
+	static int id = 1000;
 	id++;
 	return  id;
 }
@@ -99,6 +99,38 @@ int findCensistaById(Censista* list, int len, int id){
 		}
 	}
 	return index;
+}
+
+int findCensistaIndexById(Censista* list, int len, int id, int* index){
+
+	int retorno = -1;//RETURNS AN ILLOGICAL VALUE
+
+	if(list !=NULL && len > 0 && id != -1){
+		for(int i = 0; i < len; i++){
+			if(list[i].zone == id){
+				*index = i;//RETURNS POSITION OF ID FOUND
+				retorno = 0;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+
+int findCensistaIndexByIdZone(Censista* list, int len, int id_zone, int* index){
+
+	int retorno = -1;//RETURNS AN ILLOGICAL VALUE
+
+	if(list !=NULL && len > 0 && id_zone != -1){
+		for(int i = 0; i < len; i++){
+			if(list[i].zone == id_zone){
+				*index = i;//RETURNS POSITION OF ID FOUND
+				retorno = 0;
+				break;
+			}
+		}
+	}
+	return retorno;
 }
 
 int findCensistaEmpty(Censista* list, int len){
@@ -319,12 +351,11 @@ int modifyCensistaAge(Censista* list, int len, int id, int age){
 int modifyCensistaDateBirth(Censista* list, int len, int id, Date dateBirth){
 
 	int retorno = -1;//FALSE
-	int index;
 
 	if(list !=NULL && len > 0 && id != -1){
-		index = findCensistaById(list, len, id);
+
 		for(int i = 0; i < len; i++){
-			if(i == index){
+			if(list[i].id == id){
 				if(list[i].dateBirth.day != dateBirth.day){
 					list[i].dateBirth.day = dateBirth.day;
 				}
@@ -345,12 +376,10 @@ int modifyCensistaDateBirth(Censista* list, int len, int id, Date dateBirth){
 int modifyCensistaAddress(Censista* list, int len, int id, Address adress){
 
 	int retorno = -1;//FALSE
-	int index;
 
 	if(list !=NULL && len > 0 && id != -1){
-		index = findCensistaById(list, len, id);
 		for(int i = 0; i < len; i++){
-			if(i == index){
+			if(list[i].id == id){
 				if(strcmp(list[i].adress.street, adress.street) != 0){
 					strncpy(list[i].adress.street, adress.street, sizeof(list[i].adress.street));
 				}

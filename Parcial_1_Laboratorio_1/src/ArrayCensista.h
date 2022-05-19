@@ -47,6 +47,10 @@ int assignZoneToCensista(Censista* list, int len, int id_Censista, int zone);
 //BUSQUEDA
 int findCensistaById(Censista* list, int len, int id);
 
+int findCensistaIndexById(Censista* list, int len, int id, int* index);
+
+int findCensistaIndexByIdZone(Censista* list, int len, int id_zone, int* index);
+
 int findCensistaEmpty(Censista* list, int len);
 
 int findCensistaByState(Censista* list, int len, int state);

@@ -26,6 +26,8 @@
 /// @return Returns 0 for true and -1 for false.
 int getInt(char message[], int* number);
 
+int getIntMinMax(char message[], int min, int max, int* number);
+
 /// @fn int getFloat(char[], float*)
 /// @brief Prints a message, saves a string data type,
 /// if the float validation is ok, converts to float
@@ -53,6 +55,8 @@ int getChar(char message[], char* character);
 /// @param string
 /// @return Returns 0 for true and -1 for false.
 int getString(char message[], char string[]);
+
+int getStrings(char message[], char string[]);
 
 /// \fn int getStringAlnum(char[], char[])
 /// \brief Print a message, save an alphanumeric string data type,

@@ -25,6 +25,26 @@ int getInt(char message[], int* number){
 	return retorno;
 }
 
+int getIntMinMax(char message[], int min, int max, int* number){
+
+	int retorno = -1;//FALSE
+	char aux[SIZE];
+	int num;
+
+	printf("%s", message);
+	fflush(stdin);
+	scanf("%s", aux);
+
+	if(isInt(aux) == 0){
+		num = atoi(aux);
+		if(isIntBetweenMinMax(num, min, max) == 0){
+			*number = num;
+			retorno = 0;//TRUE
+		}
+	}
+	return retorno;
+}
+
 int getFloat(char message[], float* number){
 
 	int retorno = -1;//FALSE
@@ -69,6 +89,22 @@ int getString(char message[], char string[]){
 	scanf("%s", aux);
 
 	if(isString(aux) == 0){
+		strcpy(string, aux);
+		retorno = 0;//TRUE
+	}
+	return retorno;
+}
+
+int getStrings(char message[], char string[]){
+
+	char aux[SIZE];
+	int retorno = -1;//FALSE
+
+	printf("%s", message);
+	fflush(stdin);
+	scanf("%[^\n]", aux);
+
+	if(areTheyStrings(aux) == 0){
 		strcpy(string, aux);
 		retorno = 0;//TRUE
 	}

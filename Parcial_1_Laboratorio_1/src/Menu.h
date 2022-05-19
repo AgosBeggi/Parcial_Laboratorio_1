@@ -20,9 +20,6 @@ int startMenu(Censista* listCensista, int lenCensista, Zone* listZone, int lenZo
 int hardcodeAddDataMenu(Censista* listCensista, int lenCensista, Date* listDate, int lenDate, Address* listAddress, int lenAddress,
 		Zone* listZone, int lenZone, Location* listLocation, int lenLocation);
 
-int hardcodeAssignDataMenu(Censista* listCensista, int lenCensista, int lenAddress,
-		Zone* listZone, int lenZone, Location* listLocation, int lenLocation, int index);
-
 //AGREGAR
 int singUpCensistaMenu(Censista* listCensista, int lenCensista,	char name[], char lastName[], int age, int day, int month, int year,
 		char street[], int streetNumber, char neighborhood[], Date* listDate, int lenDate, Address* listAddress, int lenAddress);
@@ -46,16 +43,24 @@ int modificationsAddressMenu(Censista* listCensista, int lenCensista,	char stree
 //SUPRIMIR
 int removeCensistaMenu(Censista* listCensista, int lenCensista,	int id, Date* listDate, int lenDate, Address* listAddress, int lenAddress);
 
+int checkStateAssignLocationList(Location* listLocation, int lenLocation, int index);
+
+int checkStateFinishZoneList(Zone* listZone, int lenZone, int id_Zone);
+
 //MOSTRAR
-int printZoneLocationCensistaList(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
+int printZoneDataList(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
+
+int printAllZoneDataList(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);;
 
 int printZoneLocationCensistaDataList(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
 
 int printCensistaListMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
 
-int printZoneLocationCensista(Zone zone, Censista censista, Location location);
+int printLocation23(Zone zone, Censista censista, Location location);
 
-int printZoneLocationCensistaData(Zone zone, Censista censista, Location location);
+int printZoneData(Zone zone,  Censista censista, Location location);
+
+int printAllZoneData(Zone zone, Censista censista, Location location);
 
 //int printCensistaListMenu(Censista* list, int len);
 

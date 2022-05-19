@@ -49,6 +49,7 @@ int addLocation(Location* listLocation, int lenLocation, char name[], char stree
 		strncpy(aux.street_2, street_2, sizeof(aux.street_2));
 		strncpy(aux.street_3, street_3, sizeof(aux.street_3));
 		strncpy(aux.street_4, street_4, sizeof(aux.street_4));
+		aux.state = SIN_ASIGNAR;
 		aux.isEmpty = FULL;
 
 		for(int i = 0; i < lenLocation; i++){
@@ -67,13 +68,13 @@ int addLocationZone(Location* listLocation, int lenLocation, int id_Location, in
 	int index;
 
 	if(listLocation != NULL && lenLocation > 0 && id_Location > 0 && id_Zone > 0){
-
-		index = findLocationById(listLocation, lenLocation, id_Location);
-
-		for(int i = 0; i < lenLocation; i++){
-			if(i == index){
-				listLocation[i].id_Zone = id_Zone;
-				retorno = 0;//TRUE
+		if(findLocationById(listLocation, lenLocation, id_Location, &index) == 0){
+			for(int i = 0; i < lenLocation; i++){
+				if(i == index){
+					listLocation[i].id_Zone = id_Zone;
+					listLocation[i].state = ASIGNADO;
+					retorno = 0;//TRUE
+				}
 			}
 		}
 	}
@@ -96,19 +97,36 @@ int findLocationEmpty(Location* listLocation, int lenLocation){
 	return index;
 }
 
-int findLocationById(Location* list, int len, int id){
+int findLocationById(Location* list, int len, int id, int* index){
 
-	int index = -1;//RETURNS AN ILLOGICAL VALUE
+	int retorno = -1;//RETURNS AN ILLOGICAL VALUE
 
 	if(list !=NULL && len > 0 && id != -1){
 		for(int i = 0; i < len; i++){
 			if(list[i].id == id){
-				index = i;//RETURNS POSITION OF ID FOUND
+				*index = i;//RETURNS POSITION OF ID FOUND
+				retorno = 0;
 				break;
 			}
 		}
 	}
-	return index;
+	return retorno;
+}
+
+int findLocationIndexByIdZone(Location* list, int len, int id_zone, int* index){
+
+	int retorno = -1;//RETURNS AN ILLOGICAL VALUE
+
+	if(list !=NULL && len > 0 && id_zone != -1){
+		for(int i = 0; i < len; i++){
+			if(list[i].id_Zone == id_zone){
+				*index = i;//RETURNS POSITION OF ID FOUND
+				retorno = 0;
+				break;
+			}
+		}
+	}
+	return retorno;
 }
 
 int findLocationByZone(Location* list, int len, int id_Zone){
@@ -146,11 +164,20 @@ int printLocation(Location location){
 	int retorno = -1;//FALSE
 
 		if(location.isEmpty == FULL){
-			printf("%d \t|%-15s \t|%-15s  \t|%-15s \t|%-15s \t|%-15s\n",
-			location.id, location.name, location.street_1, location.street_2, location.street_3, location.street_4);
-		}
+			switch(location.state){
+			case SIN_ASIGNAR:
+				printf("%d \t|%-15s \t|%-15s  \t|%-15s \t|%-15s \t|%-15s	|SIN ASIGNAR\n",
+				location.id, location.name, location.street_1, location.street_2, location.street_3, location.street_4);
+				break;
+			case ASIGNADO:
+				printf("%d \t|%-15s \t|%-15s  \t|%-15s \t|%-15s \t|%-15s	|ASIGNADO\n",
+				location.id, location.name, location.street_1, location.street_2, location.street_3, location.street_4);
+				break;
+			case TERMINADO:
+				break;
+			}
 		retorno = 0;//TRUE
-
+		}
 	return retorno;
 }
 

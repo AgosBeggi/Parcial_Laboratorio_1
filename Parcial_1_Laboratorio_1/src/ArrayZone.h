@@ -49,6 +49,8 @@ int addDataZone(Zone* list, int len, int id, int virtualForm, int paperForm, int
 //BUSQUEDA
 int findZoneById(Zone* list, int len,int id);
 
+int findZoneIndexById(Zone* list, int len, int id, int* index);
+
 int findZoneEmpty(Zone* list, int len);
 
 int findZoneByLocation(Zone* list, int len, int location);
