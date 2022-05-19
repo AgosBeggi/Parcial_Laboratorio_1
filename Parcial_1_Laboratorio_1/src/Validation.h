@@ -17,6 +17,12 @@
 /// @return Returns 0 for true and -1 for false.
 int isInt(char number[]);
 
+/// @fn int isIntBetweenMinMax(int, int, int)
+/// @brief Analyze if the parameter is between min - max.
+/// @param number
+/// @param min
+/// @param max
+/// @return Returns 0 for true and -1 for false.
 int isIntBetweenMinMax(int number, int min, int max);
 
 /// @fn int isFloat(char[])

@@ -26,6 +26,16 @@
 /// @return Returns 0 for true and -1 for false.
 int getInt(char message[], int* number);
 
+/// @fn int getIntMinMax(char[], int, int, int*)
+/// @brief Prints a message, saves a string data type,
+/// if the integer validation is ok and is between min - max, converts to int
+/// and passes the value of the number to the memory
+/// address of the pointer.
+/// @param message
+/// @param min
+/// @param max
+/// @param number
+/// @return Returns 0 for true and -1 for false.
 int getIntMinMax(char message[], int min, int max, int* number);
 
 /// @fn int getFloat(char[], float*)
@@ -56,6 +66,13 @@ int getChar(char message[], char* character);
 /// @return Returns 0 for true and -1 for false.
 int getString(char message[], char string[]);
 
+/// @fn int getStrings(char[], char[])
+/// @brief Print a message, save a string data type with ' ',
+/// if string validation is ok, copy the value to
+/// the pointer's memory address.
+/// @param message
+/// @param string
+/// @return Returns 0 for true and -1 for false.
 int getStrings(char message[], char string[]);
 
 /// \fn int getStringAlnum(char[], char[])

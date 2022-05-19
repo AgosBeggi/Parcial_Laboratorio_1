@@ -29,20 +29,17 @@ int initAddress(Address* list, int len){
 int addAddress(Address* list, int len, int id, char street[], int streetNumber, char neighborhood[], int index){
 
 	int retorno = -1;//FALSE
-	Address aux;
 
 	if(list != NULL && len > 0 && id != -1 && street != NULL &&
 			streetNumber != -1 && neighborhood != NULL && index != -1){
 
-		aux.idElement = id;
-		strncpy(aux.street, street, sizeof(aux.street));
-		aux.streetNumber = streetNumber;
-		strncpy(aux.neighborhood, neighborhood, sizeof(aux.neighborhood));
-		aux.isEmpty = FULL;
-
 		for(int i = 0; i < len; i++){
 			if(i == index){
-				list[i] = aux;
+				list[i].idElement = id;
+				strncpy(list[i].street, street, sizeof(list[i].street));
+				list[i].streetNumber = streetNumber;
+				strncpy(list[i].neighborhood, neighborhood, sizeof(list[i].neighborhood));
+				list[i].isEmpty = FULL;
 				retorno = 0;//TRUE
 			}
 		}
@@ -87,30 +84,10 @@ int modifyAddressStreet(Address* list, int len, int idElement, char street[]){
 	int retorno = -1;//FALSE
 
 	if(list != NULL && len > 0 && idElement != -1 && street != NULL){
-
 		for(int i = 0; i < len; i++){
 			if(list[i].idElement == idElement){
 				strncpy(list[i].street, street, sizeof(list[i].street));
 				retorno = 0;//TRUE
-			}
-		}
-	}
-	return retorno;
-}
-
-//SUPRIMIR
-int removeAddress(Address* list, int len, int id){
-
-	int retorno = -1;//FALSE
-	int index;
-
-	if(list !=NULL && len > 0 && id != -1){
-		index = findAddressByIdElement(list, len, id);
-		for(int i = 0; i < len; i++){
-			if(i == index){
-				list[i].isEmpty = EMPTY;
-				retorno = 0;//TRUE
-				break;
 			}
 		}
 	}
@@ -148,3 +125,45 @@ int modifyAddressNeighborhood(Address* list, int len, int idElement, char neighb
 	}
 	return retorno;
 }
+
+//SUPRIMIR
+int removeAddress(Address* list, int len, int id){
+
+	int retorno = -1;//FALSE
+	int index;
+
+	if(list !=NULL && len > 0 && id != -1){
+		index = findAddressByIdElement(list, len, id);
+		for(int i = 0; i < len; i++){
+			if(i == index){
+				list[i].isEmpty = EMPTY;
+				retorno = 0;//TRUE
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -107,7 +107,7 @@ int findCensistaIndexById(Censista* list, int len, int id, int* index){
 
 	if(list !=NULL && len > 0 && id != -1){
 		for(int i = 0; i < len; i++){
-			if(list[i].zone == id){
+			if(list[i].id == id){
 				*index = i;//RETURNS POSITION OF ID FOUND
 				retorno = 0;
 				break;
@@ -418,14 +418,8 @@ int printCensista(Censista censista){
 
 	if(censista.isEmpty == FULL){
 		switch(censista.state){
-			case ACTIVO:
-				printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|ACTIVO\n",
-				censista.id, censista.name, censista.lastName,
-				censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year,
-				censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood);
-				break;
 			case LIBERADO:
-				printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|ACTIVO\n",
+				printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|SIN ASIGNAR  \t|LIBERADO\n",
 				censista.id, censista.name, censista.lastName,
 				censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year,
 				censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood);
@@ -444,3 +438,22 @@ int printCensista(Censista censista){
 }
 
 //INFORMES
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

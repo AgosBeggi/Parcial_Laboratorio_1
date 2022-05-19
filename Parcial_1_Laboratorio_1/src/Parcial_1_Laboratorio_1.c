@@ -60,9 +60,10 @@ int main(void) {
 	int option;
 	int idNumber;
 	int option_aux;
+	int desactivate;
 
 	char titleListArrayCensista[250];
-	strcpy(titleListArrayCensista, "ID \t|NOMBRE \t\t|APELLIDO  \t\t|FECHA NAC. \t|EDAD \t|DIRECCION  \t\t|BARRIO  \t\t|ESTADO\n");
+	strcpy(titleListArrayCensista, "ID \t|NOMBRE \t\t|APELLIDO  \t\t|FECHA NAC. \t|EDAD \t|DIRECCION  \t\t|BARRIO  \t\t|ZONA  \t\t|ESTADO\n");
 
 	char titleListCensista[250];
 	strcpy(titleListCensista, "ID \t|NOMBRE \t\t|APELLIDO  \t\t|FECHA NAC. \t|EDAD \t|DIRECCION  \t\t|BARRIO  \t\t|ZONA  \t\t|ESTADO\n");
@@ -74,7 +75,7 @@ int main(void) {
 	strcpy(messageError, "Ingreso incorrecto, vuelva a intentarlo.\n");
 
 	char optiondModifyCensista[250];
-	strcpy(optiondModifyCensista, "¿Qué desea modificar?\n1. NOMBRE\n2. APELLIDO\n3. EDAD\n4. FECHA DE NACIMIENTO\n5. DIRECCION\n6. ESTADO\n7. ZONA\n");
+	strcpy(optiondModifyCensista, "¿Qué desea modificar?\n1. NOMBRE\n2. APELLIDO\n3. EDAD\n4. FECHA DE NACIMIENTO\n5. DIRECCION\n6. DESACTIVAR\n");
 
 	char titleLocation[250];
 	strcpy(titleLocation, "ID \t|LOCALIDAD \t\t|CALLE 1  \t\t|CALLE 2  \t\t|CALLE 3  \t\t|CALLE 4  \t\t|ESTADO\n");
@@ -116,7 +117,7 @@ int main(void) {
 				switch(option){
 					case 0:
 						if(hardcodeAddDataMenu(listCensista, ELEMENTS, listDate, ELEMENTS, listAddress, ELEMENTS, listZone, ELEMENTS, listLocation, ELEMENTS) == 0){
-							printf("%s\n", messageOk);//OK PRIMERA PARTE
+							printf("%s\n", messageOk);
 						}
 						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 					break;
@@ -162,15 +163,23 @@ int main(void) {
 						//MODIFICAR CENSISTA
 						printf("\n%s", titleListArrayCensista);
 						puts("------------------------------------------------------------------------------------------------------------------------------------------");
-						printCensistaList(listCensista, ELEMENTS);
+						printCensistaListMenu(listZone, ELEMENTS, listCensista, ELEMENTS, listLocation, ELEMENTS);
 						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						getInt("Ingrese el id del censista que desea modificar\n", &idNumber);
 
-						if(findCensistaIndexById(listCensista, ELEMENTS, idNumber, &indexCensista) == 0){
+						findCensistaIndexById(listCensista, ELEMENTS, idNumber, &indexCensista);
+						if(indexCensista != -1){
+							id_Zone =  findZoneIdByCensista(listZone, ELEMENTS, idNumber);
+							findZoneIndexById(listZone, ELEMENTS, id_Zone, &indexZone);
+							if(findLocationIndexByIdZone(listLocation, ELEMENTS, id_Zone, &indexLocation) != 0){
+								printf("%s\n", messageError);
+								puts("------------------------------------------------------------------------------------------------------------------------------------------");
+								break;
+							}
 							puts("Usted eligio: \n\n");
-							printf("%s", titleListCensista);
+							printf("\n%s", titleListArrayCensista);
 							puts("------------------------------------------------------------------------------------------------------------------------------------------");
-							printCensista(listCensista[indexCensista]);
+							printCensistaMenu(listCensista[indexCensista], listZone[indexZone], listLocation[indexLocation]);//NO OK
 							puts("------------------------------------------------------------------------------------------------------------------------------------------");
 
 							puts("\n¿Desea continuar?\n");
@@ -181,7 +190,7 @@ int main(void) {
 								do{
 									printf("%s\n", optiondModifyCensista);
 									getInt("", &option);
-									}while(option != 1 && option != 2 && option != 3 && option != 4 && option != 5);
+									}while(option != 1 && option != 2 && option != 3 && option != 4 && option != 5 && option != 6);
 								switch(option){
 									case 1:
 										while(getStrings("1. NOMBRE: ", name) != 0){
@@ -243,6 +252,7 @@ int main(void) {
 												while(getStrings("CALLE: ", street) != 0){
 													printf("%s\n", messageError);
 												}
+												printf("%s\n", street);
 												break;
 											case 2:
 												while(getInt("ALTURA: ", &streetNumber) != 0){
@@ -255,13 +265,20 @@ int main(void) {
 												}
 												break;
 										}
-										if(modificationsAddressMenu(listCensista, ELEMENTS, street, streetNumber, neighborhood, idNumber, optionDate, listAddress, ELEMENTS) == 0){
+										if(modificationsAddressMenu(listCensista, ELEMENTS, street, streetNumber, neighborhood, idNumber, optionAddress, listAddress, ELEMENTS) == 0){
 											printf("%s\n", messageOk);
 										}
-										case 6://ESTADO
-											break;
-										case 7://ZONA
-											break;
+									break;
+									case 6://DESACTIVAR
+										puts("Está a punto de desactivar al censista");
+										puts("¿Desea continuar?\n");
+										puts("1. SI");
+										puts("2. NO");
+										if(getInt("", &desactivate) == 0){
+											if(modifyCensistaState(listCensista, ELEMENTS, idNumber, 3)){
+												printf("%s\n", messageOk);
+											}
+										}
 									break;
 								}
 							}
@@ -329,7 +346,7 @@ int main(void) {
 						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						getInt("Ingrese el id de la localidad\n", &id_Location);
 
-						if(checkStateAssignLocationList(listLocation, ELEMENTS, indexLocation) == 0){
+						if(checkStateAssignLocationList(listLocation, ELEMENTS, id_Location) == 0){
 							puts("------------------------------------------------------------------------------------------------------------------------------------------");
 							puts("La zona ya esta asignada. Intente nuevamente");
 							puts("------------------------------------------------------------------------------------------------------------------------------------------");

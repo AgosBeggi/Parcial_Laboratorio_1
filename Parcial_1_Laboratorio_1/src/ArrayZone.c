@@ -195,6 +195,21 @@ int findZoneByCensista(Zone* list, int len,int idCensista){
 	return index;
 }
 
+int findZoneIdByCensista(Zone* list, int len,int idCensista){
+
+	int index = -1;//RETURNS AN ILLOGICAL VALUE
+
+	if(list !=NULL && len > 0){
+		for(int i = 0; i < len; i++){
+			if(list[i].idCensista == idCensista){
+				index = list[i].id;//RETURN POSITION	OF CENSUS ID FOUND
+				break;
+			}
+		}
+	}
+	return index;
+}
+
 int findIdZoneByLocation(Zone* list, int len, int location){
 
 	int index = -1;//RETURNS AN ILLOGICAL VALUE
@@ -388,54 +403,16 @@ int modifyZoneAbsent(Zone* list, int len, int id, int absent){
 //CALCULAR
 int totalZone(Zone* list, int len){
 
-	int auxPaper = 0;
-	int auxVirtual = 0;
-	int auxAbsent = 0;
 	int total = 0;
 
 	if(list !=NULL && len > 0){
 		for(int i = 0; i < len; i++){
-			if(list[i].paperForm > 0){
-				auxPaper = auxPaper + list[i].paperForm;
-			}
-			if(list[i].virtualForm > 0){
-				auxVirtual = auxVirtual + list[i].virtualForm;
-			}
-			if(list[i].absent > 0){
-				auxAbsent = auxAbsent + list[i].absent;
+			if(list[i].totalAdd > 0){
+				total = total + list[i].totalAdd;
 			}
 		}
-		total = auxPaper + auxVirtual + auxAbsent;
 	}
 	return total;
-}
-
-int totalZoneUnfinished(Zone* list, int len){
-
-	int aux = 0;
-
-	if(list !=NULL && len > 0){
-		for(int i = 0; i < len; i++){
-			if(list[i].state == PENDIENTE){
-				aux ++;
-			}
-		}
-	}
-	return aux;
-}
-
-int totalZoneFinished(Zone* list, int len){
-
-	int aux = 0;
-
-	if(list !=NULL && len > 0){
-		for(int i = 0; i < len; i++){
-			if(list[i].state == FINALIZADO){
-				aux ++;
-			}
-		}
-	}
-	return aux;
 }
 
 int totalAssignZone(Zone* list, int len){
@@ -452,7 +429,7 @@ int totalAssignZone(Zone* list, int len){
 	return assign;
 }
 
-int totalUnallocatedZone(Zone* list, int len){
+int totalUnassignedZone(Zone* list, int len){
 
 	int unallocated = 0;
 
@@ -466,6 +443,34 @@ int totalUnallocatedZone(Zone* list, int len){
 	return unallocated;
 }
 
+int totalZoneFinished(Zone* list, int len){
+
+	int aux = 0;
+
+	if(list !=NULL && len > 0){
+		for(int i = 0; i < len; i++){
+			if(list[i].state == FINALIZADO){
+				aux ++;
+			}
+		}
+	}
+	return aux;
+}
+
+int totalZoneUnfinished(Zone* list, int len){
+
+	int aux = 0;
+
+	if(list !=NULL && len > 0){
+		for(int i = 0; i < len; i++){
+			if(list[i].state == PENDIENTE){
+				aux ++;
+			}
+		}
+	}
+	return aux;
+}
+
 //PROMEDIOS
 float percentageVirtualZone(Zone* list, int len){
 
@@ -476,7 +481,7 @@ float percentageVirtualZone(Zone* list, int len){
 	if(list !=NULL && len > 0){
 		total = totalZone(list, len);
 		for(int i = 0; i < len; i++){
-			if(list[i].paperForm > 0){
+			if(list[i].virtualForm > 0){
 				aux = aux + list[i].virtualForm;
 			}
 		}
@@ -520,51 +525,5 @@ float percentageAbsentZone(Zone* list, int len){
 	}
 	return percentage;
 }
-
-//MOSTRAR
-//int printZoneList(Zone* list, int len){
-//
-//	int retorno = -1;//FALSE
-//
-//	if(list !=NULL && len > 0){
-//		for(int i = 0; i < len; i++){
-//			if(list[i].isEmpty == FULL){
-//				printZone(list[i]);
-//				retorno = 0;//TRUE
-//			}
-//		}
-//	}
-//	return retorno;
-//}
-//
-//int printZone(Zone zone){
-//
-//	int retorno = -1;//FALSE
-//
-//	if(zone.isEmpty == FULL){
-//
-//		if(zone.location == EMPTY){//no puede existir
-//			printf("%d \t%-7s \t%-7s  \t%-7s \t%-7s \t%-7s \t%-7s %s \t%-7d  \t%-7d   \t%-7d  \tPENDIENTE\n",
-//			zone.id, zone.location, zone.idCensista, zone.paperForm, zone.virtualForm, zone.absent, zone.totalAdd);
-//		}
-//		if(zone.idCensista == EMPTY){
-//					printf("%d \t%-7s \t%-7s  \t%-7s \t%-7s \t%-7s \t%-7s %s \t%-7d  \t%-7d   \t%-7d  \tPENDIENTE\n",
-//					zone.id, zone.location, zone.idCensista, zone.paperForm, zone.virtualForm, zone.absent, zone.totalAdd);
-//				}
-//		switch(zone.state){
-//		case PENDIENTE:
-//			printf("%d \t%-7s \t%-7s  \t%-7s \t%-7s \t%-7s \t%-7s %s \t%-7d  \t%-7d   \t%-7d  \tPENDIENTE\n",
-//			zone.id, zone.location, zone.idCensista, zone.paperForm, zone.virtualForm, zone.absent, zone.totalAdd);
-//			break;
-//		case FINALIZADO:
-//			printf("%d \t%-7s \t%-7s  \t%-7s \t%-7s \t%-7s \t%-7s %s \t%d  \t%-7d   \t%-7d  \tPENDIENTE\n",
-//					zone.id, zone.location, zone.idCensista, zone.paperForm, zone.virtualForm, zone.absent, zone.totalAdd);
-//			break;
-//		}
-//
-//		retorno = 0;//TRUE
-//	}
-//	return retorno;
-//}
 
 //INFORMES
