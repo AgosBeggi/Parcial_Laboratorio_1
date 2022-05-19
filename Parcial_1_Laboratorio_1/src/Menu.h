@@ -232,6 +232,29 @@ int printAllZoneData(Zone zone, Censista censista, Location location);
 /// @return int (-1) if Error [Invalid length or NULL pointer] - (0) if Ok.
 int printCensistaMenu(Censista censista, Zone zone, Location location);
 
+int printCensistaMinTotalZoneListMenu(Censista censista, Zone zone, Location location);
+
+int censistaMaxTotalZoneListMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
+
+int censistaMinTotalZoneListMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
+
+int percentajeVirtualZoneListMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
+
+int percentajePaperlZoneListMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
+
+int percentajeAbsentlZoneListMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
+
+int cantidadCensistasEstadoActivoZonaPendiente(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
+
+//INFORMES
+int printCensistaEspecificosMenu(Censista censista, Zone zone, Location location);
+
+int printCensistaEspecificosListMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
+
+int promedioDeCensosPorCensista(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation);
+
+int printPromedioDeCensosPorCensista(Censista censista, Zone zone, Location location, float promedio);
+
 #endif /* MENU_H_ */
 
 

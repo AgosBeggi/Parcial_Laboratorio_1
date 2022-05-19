@@ -109,6 +109,8 @@ int findLocationIndexByIdZone(Location* list, int len, int id_zone, int* index);
 /// NULL pointer received or element not found].
 int findLocationByZone(Location* list, int len, int id_Zone);
 
+int modifyLocationState(Location* list, int len, int id, int state);
+
 //MOSTRAR
 /// @fn int printLocationList(Location*, int)
 /// @brief print the content of passengers array.

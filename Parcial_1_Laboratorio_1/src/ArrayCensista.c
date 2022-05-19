@@ -225,7 +225,7 @@ int sortCensista(Censista* list, int len, int order){
 					isOrdered = 1;
 					len--;
 					for (i = 0; i < len; i++) {
-						if (list[i].state > list[i + 1].state &&
+						if (strcmp(list[i].name, list[i].name) < 0 &&
 							strcmp(list[i].lastName, list[i].lastName) < 0){
 							aux = list[i];
 							list[i] = list[i + 1];
@@ -241,7 +241,7 @@ int sortCensista(Censista* list, int len, int order){
 					isOrdered = 1;
 					len--;
 					for (i = 0; i < len; i++) {
-						if (list[i].state < list[i + 1].state &&
+						if (strcmp(list[i].name, list[i].name) < 0 &&
 							strcmp(list[i].lastName, list[i].lastName) < 0){
 							aux = list[i];
 							list[i] = list[i + 1];

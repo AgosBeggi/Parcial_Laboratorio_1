@@ -62,8 +62,13 @@ int main(void) {
 	int option_aux;
 	int desactivate;
 
+	int cantidadPActivos;
+
 	char titleListArrayCensista[250];
 	strcpy(titleListArrayCensista, "ID \t|NOMBRE \t\t|APELLIDO  \t\t|FECHA NAC. \t|EDAD \t|DIRECCION  \t\t|BARRIO  \t\t|ZONA  \t\t|ESTADO\n");
+
+	char printPromedioDeCensosPorCensista[250];
+	strcpy(printPromedioDeCensosPorCensista, "ID \t|NOMBRE \t\t|APELLIDO  \t\t|FECHA NAC. \t|EDAD \t|DIRECCION  \t\t|BARRIO  \t\t|ZONA  \t\t|PROM  \t\t|ESTADO\n");
 
 	char titleListCensista[250];
 	strcpy(titleListCensista, "ID \t|NOMBRE \t\t|APELLIDO  \t\t|FECHA NAC. \t|EDAD \t|DIRECCION  \t\t|BARRIO  \t\t|ZONA  \t\t|ESTADO\n");
@@ -346,9 +351,15 @@ int main(void) {
 						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						getInt("Ingrese el id de la localidad\n", &id_Location);
 
-						if(checkStateAssignLocationList(listLocation, ELEMENTS, id_Location) == 0){
+						if(checkStateAssignLocationList(listLocation, ELEMENTS, id_Location) == 1){
 							puts("------------------------------------------------------------------------------------------------------------------------------------------");
 							puts("La zona ya esta asignada. Intente nuevamente");
+							puts("------------------------------------------------------------------------------------------------------------------------------------------");
+							break;
+						}
+						if(checkStateAssignLocationList(listLocation, ELEMENTS, id_Location) == 2){
+							puts("------------------------------------------------------------------------------------------------------------------------------------------");
+							puts("Zona finalizada. Intente nuevamente");
 							puts("------------------------------------------------------------------------------------------------------------------------------------------");
 							break;
 						}
@@ -474,9 +485,30 @@ int main(void) {
 						break;
 					case 9:
 						//INFORMES//
-						printf("\n%s", titleZoneLocation);//OK
+						cantidadPActivos = cantidadCensistasEstadoActivoZonaPendiente(listZone, ELEMENTS, listCensista, ELEMENTS, listLocation, ELEMENTS);
+						printf("a. Informar cantidad de censistas en estado Activo con zona Pendiente: %d\n", cantidadPActivos);
 						puts("------------------------------------------------------------------------------------------------------------------------------------------");
-						printZoneDataList(listZone, ELEMENTS, listCensista, ELEMENTS, listLocation, ELEMENTS);
+						printf("b. Mostrar el listado de censistas de Avellaneda, Lanús, Lomas de Zamora o Banfield	ordenados alfabéticamente por apellido y nombre.\n");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
+						printf("\n%s", titleListCensista);//OK
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
+						printCensistaEspecificosListMenu(listZone, ELEMENTS, listCensista, ELEMENTS, listLocation, ELEMENTS);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
+						id_Location = totalZoneAbsent(listZone, ELEMENTS);
+						findLocationById(listLocation, ELEMENTS, id_Location, &indexLocation);
+						printf("c. Localidad con más casas ausentes: %s\n", listLocation[indexLocation].name);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
+						printf("d. Censista cuya zona fue la más censada (total censados presencial y virtual): \n");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
+						idNumber = totalZonePeperVirtual(listZone, ELEMENTS);
+						findCensistaIndexById(listCensista, ELEMENTS, idNumber, &indexCensista);
+						printf("%s, %s\n", listCensista[indexCensista].name, listCensista[indexCensista].lastName);
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
+						printf("e. Informar el promedio de censos por censista/zona.\n");
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
+						printf("\n%s", printPromedioDeCensosPorCensista);//OK
+						puts("------------------------------------------------------------------------------------------------------------------------------------------");
+						promedioDeCensosPorCensista(listZone, ELEMENTS, listCensista, ELEMENTS, listLocation, ELEMENTS);
 						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						break;
 					case 10:

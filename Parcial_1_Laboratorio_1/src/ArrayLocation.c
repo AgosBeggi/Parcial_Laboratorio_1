@@ -144,40 +144,59 @@ int findLocationByZone(Location* list, int len, int id_Zone){
 	return index;
 }
 
+int modifyLocationState(Location* list, int len, int id, int state){
+
+	int retorno = -1;//FALSE
+	int index;
+
+	if(list !=NULL && len > 0 && id != -1 && state != -1){
+		findLocationById(list, len, id, &index);
+		for(int i = 0; i < len; i++){
+			if(i == index){
+				list[i].state = state;
+				retorno = 0;//TRUE
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+
 //MOSTRAR
 int printLocationList(Location* listLocation, int lenLocation){
 	int retorno = -1;//FALSE
 
-
-		if(listLocation !=NULL && lenLocation){
-			for(int i = 0; i < lenLocation; i++){
-				if(listLocation[i].isEmpty == FULL){
-					printLocation(listLocation[i]);
-					retorno = 0;//TRUE
-				}
+	if(listLocation !=NULL && lenLocation){
+		for(int i = 0; i < lenLocation; i++){
+			if(listLocation[i].isEmpty == FULL){
+				printLocation(listLocation[i]);
+				retorno = 0;//TRUE
 			}
 		}
-		return retorno;
+	}
+	return retorno;
 }
 
 int printLocation(Location location){
 	int retorno = -1;//FALSE
 
-		if(location.isEmpty == FULL){
-			switch(location.state){
-			case SIN_ASIGNAR:
-				printf("%d \t|%-15s \t|%-15s  \t|%-15s \t|%-15s \t|%-15s	|SIN ASIGNAR\n",
-				location.id, location.name, location.street_1, location.street_2, location.street_3, location.street_4);
-				break;
-			case ASIGNADO:
-				printf("%d \t|%-15s \t|%-15s  \t|%-15s \t|%-15s \t|%-15s	|ASIGNADO\n",
-				location.id, location.name, location.street_1, location.street_2, location.street_3, location.street_4);
-				break;
-			case TERMINADO:
-				break;
-			}
-		retorno = 0;//TRUE
+	if(location.id != -1){
+		switch(location.state){
+		case SIN_ASIGNAR:
+			printf("%d \t|%-15s \t|%-15s  \t|%-15s \t|%-15s \t|%-15s	|SIN ASIGNAR\n",
+			location.id, location.name, location.street_1, location.street_2, location.street_3, location.street_4);
+			break;
+		case ASIGNADO:
+			printf("%d \t|%-15s \t|%-15s  \t|%-15s \t|%-15s \t|%-15s	|ASIGNADO\n",
+			location.id, location.name, location.street_1, location.street_2, location.street_3, location.street_4);
+			break;
+		case TERMINADO:
+			printf("%d \t|%-15s \t|%-15s  \t|%-15s \t|%-15s \t|%-15s	|TERMINADO\n",
+			location.id, location.name, location.street_1, location.street_2, location.street_3, location.street_4);
+			break;
 		}
+	retorno = 0;//TRUE
+	}
 	return retorno;
 }
 

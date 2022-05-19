@@ -527,3 +527,40 @@ float percentageAbsentZone(Zone* list, int len){
 }
 
 //INFORMES
+int totalZoneAbsent(Zone* list, int len){
+
+	int retorno;
+	int index;
+	int flag = 0;
+	int max;
+
+	if(list !=NULL && len > 0){
+		for(int i = 0; i < len; i++){
+			if(flag == 0 || max < list[i].absent){
+				max = list[i].absent;
+				index = i;
+			}
+		}
+		retorno = list[index].location;//TRUE
+	}
+	return retorno;
+}
+
+int totalZonePeperVirtual(Zone* list, int len){
+
+	int retorno;
+	int total;
+	int censos;
+	int flag = 0;
+
+	if(list !=NULL && len > 0){
+		for(int i = 0; i < len; i++){
+			censos = list[i].paperForm + list[i].virtualForm;
+			if(flag == 0 || total < censos){
+				total = censos;
+				retorno = list[i].idCensista;//TRUE
+			}
+		}
+	}
+	return retorno;
+}

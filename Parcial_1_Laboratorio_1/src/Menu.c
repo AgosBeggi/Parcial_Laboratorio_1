@@ -63,7 +63,10 @@ int hardcodeAddDataMenu(Censista* listCensista, int lenCensista, Date* listDate,
 					listDate, lenDate, listAddress, lenAddress) == 0){
 				assignZoneMenu(listZone, lenZone, listCensista, lenCensista, listCensista[control].id,
 								listLocation, lenLocation, index);
-				addDataMenu(listZone, lenZone, listZone[control].id, virtualForm[j], paperForm[j], absent[j], total[j]);
+				if(addDataMenu(listZone, lenZone, listZone[control].id, virtualForm[j], paperForm[j], absent[j], total[j]) == 0){
+					modifyCensistaState(listCensista, lenCensista, listCensista[control].id, 3);
+					modifyLocationState(listLocation, lenLocation, listLocation[control].id, 2);
+				}
 				retorno = 0;
 			}
 			j++;
@@ -149,8 +152,9 @@ int addDataMenu(Zone* listZone, int lenZone, int id_Zone, int paperForm, int int
 	int retorno = -1;//FALSE
 
 	if(listZone != NULL && lenZone > 0 && id_Zone != -1 && paperForm != -1 && intvirtualForm != -1 && absent != -1 && totalAdd != -1){
-		addDataZone(listZone, lenZone, id_Zone, intvirtualForm, paperForm, absent, totalAdd);
-		retorno = 0;//TRUE
+		if(addDataZone(listZone, lenZone, id_Zone, intvirtualForm, paperForm, absent, totalAdd) == 0){
+			retorno = 0;//TRUE
+		}
 	}
 	return retorno;
 }
@@ -274,10 +278,8 @@ int checkStateAssignLocationList(Location* listLocation, int lenLocation, int id
 	if(listLocation !=NULL && lenLocation > 0 && id != -1){
 		for(int i = 0; i < lenLocation; i++){
 			if(listLocation[i].isEmpty == FULL &&  listLocation[i].id == id){
-				if(listLocation[i].state == ASIGNADO){
-					retorno = 0;//TRUE
+				retorno = listLocation[i].state;//TRUE
 				break;
-				}
 			}
 		}
 	}
@@ -416,6 +418,7 @@ int printAllZoneData(Zone zone, Censista censista, Location location){
 }
 
 int printCensistaMenu(Censista censista, Zone zone, Location location){
+
 	int retorno = -1;//FALSE
 	retorno = 0;//TRUE
 
@@ -454,3 +457,298 @@ int printCensistaMenu(Censista censista, Zone zone, Location location){
 	}
 		return retorno;
 }
+
+int printCensistaEspecificosListMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
+
+	int retorno = -1;//FALSE
+
+	if(listZone !=NULL && lenZone > 0 && listCensista !=NULL && lenCensista > 0 && listLocation !=NULL && lenLocation > 0){
+		for(int i = 0; i < lenZone; i++){
+			if(listCensista[i].isEmpty == FULL){
+				if(listCensista[i].zone == listLocation[i].id_Zone){
+					printCensistaEspecificosMenu(listCensista[i], listZone[i], listLocation[i]);
+				}
+				retorno = 0;//TRUE
+			}
+		}
+	}
+	return retorno;
+}
+
+int printCensistaEspecificosMenu(Censista censista, Zone zone, Location location){
+
+	int retorno = -1;//FALSE
+	retorno = 0;//TRUE
+
+	if(censista.id != -1 && zone.id != -1 && location.id != -1){
+		if(strcmp(location.name, "AVELLANEDA") == 0 && strcmp(location.name, "LANUS") == 0 && strcmp(location.name, "LOMAS DE ZAMORA") == 0){
+			switch(censista.state){
+				case 1:
+					if(censista.zone == zone.id && zone.location == location.id){
+						printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|%-10s  \t|ACTIVO\n",
+						censista.id, censista.name, censista.lastName,
+						censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year,
+						censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood,
+						location.name);
+					}else{
+						printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|SIN ASIGNAR  \t|ACTIVO\n",
+						censista.id, censista.name, censista.lastName,
+						censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year,
+						censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood);
+					}
+					break;
+				case 2:
+					printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|SIN ASIGNAR  \t|LIBERADO\n",
+					censista.id, censista.name, censista.lastName,
+					censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year,
+					censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood);
+					break;
+				case 3:
+					printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|SIN ASIGNAR  \t|INACTIVO\n",
+					censista.id, censista.name, censista.lastName,
+					censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year,
+					censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood);
+					break;
+			}
+		retorno = 0;//TRUE
+		}
+	}
+		return retorno;
+}
+
+
+int printCensistaMinTotalZoneListMenu(Censista censista, Zone zone, Location location){
+
+	int retorno = -1;//FALSE
+	retorno = 0;//TRUE
+
+	if(censista.id != -1 && zone.id != -1 && location.id != -1){
+		if(censista.isEmpty == FULL){
+			switch(censista.state){
+			case 1:
+				printf("ID: %d\n", censista.id);
+				printf("NOMBRE: %s\n", censista.name);
+				printf("APELLIDO: %s\n", censista.lastName);
+				printf("FECHA DE NACIMIENTO: %d/%d/%d\n", censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year);
+				printf("EDAD: %d\n", censista.age);
+				printf("DIRECCION: %s %d, %s\n", censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood);
+				printf("LOCALIDAD: %s\n",location.name);
+				printf("TOTAL CENSADOS: %d\n", zone.totalAdd);
+				printf("ESTADO: ACTIVO\n\n");
+				break;
+				case 2:
+					printf("ID: %d\n", censista.id);
+					printf("NOMBRE: %s\n", censista.name);
+					printf("APELLIDO: %s\n", censista.lastName);
+					printf("FECHA DE NACIMIENTO: %d/%d/%d\n", censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year);
+					printf("EDAD: %d\n", censista.age);
+					printf("DIRECCION: %-15s %-5d, %-15s\n", censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood);
+					printf("LOCALIDAD: %-10s\n",location.name);
+					printf("TOTAL CENSADOS: %-5d\n", zone.totalAdd);
+					printf("ESTADO: LIBERADO");
+					break;
+				case 3:
+					printf("ID: %d\n", censista.id);
+					printf("NOMBRE: %s\n", censista.name);
+					printf("APELLIDO: %s\n", censista.lastName);
+					printf("FECHA DE NACIMIENTO: %d/%d/%d\n", censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year);
+					printf("EDAD: %d\n", censista.age);
+					printf("DIRECCION: %-15s %-5d, %-15s\n", censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood);
+					printf("LOCALIDAD: %-10s\n",location.name);
+					printf("TOTAL CENSADOS: %-5d\n", zone.totalAdd);
+					printf("ESTADO: INACTIVO");
+					break;
+			}
+		retorno = 0;//TRUE
+		}
+	}
+			return retorno;
+}
+
+//INFORMES
+
+//CENSISTA CON MAYOR NUMERO DE CENSADOS
+int censistaMaxTotalZoneListMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
+
+	int retorno = -1;//FALSE
+	int flag = 0;
+	int max;
+
+	if(listZone !=NULL && lenZone > 0 && listCensista !=NULL && lenCensista > 0 && listLocation !=NULL && lenLocation > 0){
+		for(int i = 0; i < lenZone; i++){
+			if(listCensista[i].isEmpty == FULL && listCensista[i].state == ACTIVO && listCensista[i].zone == listZone[i].id){
+				if(flag == 0 || max < listZone[i].totalAdd){
+					max = listZone[i].totalAdd;
+					retorno = 0;//TRUE
+				}
+			}
+		}
+	}
+	return retorno;
+}
+
+//CENSISTA CON MENOR NUMERO DE CENSADOS
+int censistaMinTotalZoneListMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
+
+	int retorno = -1;//FALSE
+	int flag = 0;
+	int i = 0;
+	int j = 0;
+	int min;
+
+	if(listZone !=NULL && lenZone > 0 && listCensista !=NULL && lenCensista > 0 && listLocation !=NULL && lenLocation > 0){
+
+		for(; i < lenZone; i++){
+			if(listCensista[i].isEmpty == FULL && listCensista[i].state == ACTIVO && listCensista[i].zone == listZone[i].id){
+				if(flag == 0 || min > listZone[i].totalAdd){
+					min = listZone[i].totalAdd;
+					retorno = 0;//TRUE
+				}
+			}
+		}
+
+		for(; j < lenZone; j++){
+			if(min == listZone[j].totalAdd){
+				printCensistaMinTotalZoneListMenu(listCensista[j], listZone[j], listLocation[j]);
+				retorno = 0;//TRUE
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+
+//PORCENTAJE DE CENSOS VIRTUALES
+int percentageVirtualZoneListMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
+
+	//int flag = 0;
+	int percentage;
+
+	if(listZone !=NULL && lenZone > 0 && listCensista !=NULL && lenCensista > 0 && listLocation !=NULL && lenLocation > 0){
+
+		percentage = percentageVirtualZone(listZone, lenZone);
+	}
+	return percentage;
+}
+
+//PORCENTAJE DE CENSOS EN PAPEL
+int percentagePaperlZoneListMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
+
+	//int flag = 0;
+	int percentage;
+
+	if(listZone !=NULL && lenZone > 0 && listCensista !=NULL && lenCensista > 0 && listLocation !=NULL && lenLocation > 0){
+
+		percentage = percentagePaperZone(listZone, lenZone);
+	}
+	return percentage;
+}
+
+//PORCENTAJE DE AUSENTES
+int percentajeAbsentlZoneListMenu(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
+
+	//int flag = 0;
+	int percentage;
+
+	if(listZone !=NULL && lenZone > 0 && listCensista !=NULL && lenCensista > 0 && listLocation !=NULL && lenLocation > 0){
+
+		percentage = percentageAbsentZone(listZone, lenZone);
+	}
+	return percentage;
+}
+
+int cantidadCensistasEstadoActivoZonaPendiente(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
+
+	int total;
+
+	if(listZone !=NULL && lenZone > 0 && listCensista !=NULL && lenCensista > 0 && listLocation !=NULL && lenLocation > 0){
+		for(int i = 0; i < lenZone; i++){
+			if(listCensista[i].isEmpty == FULL && listCensista[i].state == ACTIVO && listZone[i].state == PENDIENTE){
+				total++;
+			}
+		}
+	}
+	return total;
+}
+
+int promedioDeCensosPorCensista(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
+
+	int retorno = -1;//FALSE
+	int total;
+	float promedio;
+	int contador = 0;
+
+	if(listZone !=NULL && lenZone > 0 && listCensista !=NULL && lenCensista > 0 && listLocation !=NULL && lenLocation > 0){
+
+		for(int j = 0; j < lenZone; j++){
+			contador++;
+		}
+		for(int i = 0; i < lenZone; i++){
+			if(listZone[i].virtualForm > 0){
+				total = total + listZone[i].virtualForm;
+			}
+			if(listZone[i].paperForm > 0){
+				total = total + listZone[i].paperForm;
+			}
+			if(total > 0){
+				promedio = (float)total/contador;
+				printPromedioDeCensosPorCensista(listCensista[i], listZone[i], listLocation[i], promedio);
+			}
+		}
+	}
+	return retorno;
+}
+
+int printPromedioDeCensosPorCensista(Censista censista, Zone zone, Location location, float promedio){
+
+	int retorno = -1;//FALSE
+	retorno = 0;//TRUE
+
+	if(censista.id != -1 && zone.id != -1 && location.id != -1){
+		switch(censista.state){
+			case 1:
+				if(censista.zone == zone.id && zone.location == location.id){
+					printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|%-10s  \t|%.2f\t|ACTIVO\n",
+					censista.id, censista.name, censista.lastName,
+					censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year,
+					censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood,
+					location.name, promedio);
+				}else{
+					printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|SIN ASIGNAR  \t|%.2f\t|ACTIVO\n",
+					censista.id, censista.name, censista.lastName,
+					censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year,
+					censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood, promedio);
+				}
+				break;
+			case 2:
+				printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|SIN ASIGNAR  \t|%.2f\t|LIBERADO\n",
+				censista.id, censista.name, censista.lastName,
+				censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year,
+				censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood, promedio);
+				break;
+			case 3:
+				printf("%d \t|%-15s   \t|%-15s \t|%d/%d/%d  \t|%d \t|%-15s %-5d \t|%-15s  \t|SIN ASIGNAR  \t|%.2f\t|INACTIVO\n",
+				censista.id, censista.name, censista.lastName,
+				censista.dateBirth.day, censista.dateBirth.month, censista.dateBirth.year,
+				censista.age, censista.adress.street, censista.adress.streetNumber, censista.adress.neighborhood, promedio);
+				break;
+		}
+		retorno = 0;//TRUE
+		}
+
+	return retorno;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

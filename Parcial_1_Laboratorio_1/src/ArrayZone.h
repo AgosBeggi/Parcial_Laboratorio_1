@@ -304,6 +304,9 @@ float percentagePaperZone(Zone* list, int len);
 float percentageAbsentZone(Zone* list, int len);
 
 //INFORMES
+int totalZoneAbsent(Zone* list, int len);
+
+int totalZonePeperVirtual(Zone* list, int len);
 
 #endif /* ARRAYZONE_H_ */
 
