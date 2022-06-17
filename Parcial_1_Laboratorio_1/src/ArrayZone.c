@@ -41,7 +41,7 @@ int initZone(Zone* list, int len){
 //AGREGAR
 int addZone(Zone* list, int len, int id, int location){
 
-	int retorno = -1;//FALSE
+	int retorno = -1;
 		int index;
 		Zone aux;
 
@@ -56,7 +56,7 @@ int addZone(Zone* list, int len, int id, int location){
 			for(int i = 0; i < len; i++){
 				if(i == index){
 					list[i] = aux;
-					retorno = 0;//TRUE
+					retorno = 0;
 				}
 			}
 		}

@@ -184,7 +184,7 @@ int main(void) {
 							puts("Usted eligio: \n\n");
 							printf("\n%s", titleListArrayCensista);
 							puts("------------------------------------------------------------------------------------------------------------------------------------------");
-							printCensistaMenu(listCensista[indexCensista], listZone[indexZone], listLocation[indexLocation]);//NO OK
+							printCensistaMenu(listCensista[indexCensista], listZone[indexZone], listLocation[indexLocation]);
 							puts("------------------------------------------------------------------------------------------------------------------------------------------");
 
 							puts("\n¿Desea continuar?\n");
@@ -320,7 +320,7 @@ int main(void) {
 						}
 						puts("------------------------------------------------------------------------------------------------------------------------------------------");
 						break;
-					case 4://OK
+					case 4:
 						//CARGA DE ZONA
 						while(getStrings("1. LOCALIDAD: ", nameLocation) != 0){
 							printf("%s\n", messageError);
@@ -522,3 +522,166 @@ int main(void) {
 	puts("\nPARCIAL_1\nBeggi A.");
 	return EXIT_SUCCESS;
 }
+
+/******************************************************************************
+
+PUNTEROS
+
+1-Realizar una función que reciba un puntero a char y dos char.
+La función deberá reemplazar en la cadena cada ocurrencia del primer carácter recibido,
+por el segundo. Retornando la cantidad de reemplazos o -1 en caso de error.
+Utilizar aritmetica de punteros
+
+2-Realizar una función que reciba como parámetros un array de enteros y un entero por referencia.
+La función calculará el valor máximo de ese array y utilizará el valor por referencia para retornar ese valor.
+Utilizar aritmetica de punteros
+
+3-Dada la siguiente estructura: int legajo; char nombre[20]; int edad;
+Realizar una función que cargue un array de 3 estudiantes.
+Recibe un entero.
+Retorna el estudiante dado de alta y por parámetro 0 si funcionó correctamente -1 mal.
+Una vez devuelto el estudiante cargarlo en una posición del array.
+Al final mostrar el array cargado
+Utilizar aritmetica de punteros
+
+ 4-Dada la siguiente estructura: int legajo; char nombre[20]; int edad;
+Realizar una función que cargue un array de 3 estudiantes.
+Recibe un puntero al array de estudiantes, lo carga y retorna 0 si funcionó correctamente -1 mal.
+Una vez cargados los estudiantes mostrar el array cargado
+Utilizar aritmetica de punteros
+
+******************************************************************************
+#include <stdio.h>
+#include <string.h>
+
+typedef struct{
+    int legajo;
+    char nombre[20];
+    int edad;
+}Alumno;
+
+int funcionUno(char* pChar, char a, char b);
+int funcionDos(int* arrayInt, int* pInt, int len);
+Alumno funcionTres(int* retorno);
+int funcionCuatro(Alumno* arrayAlumno, int len);
+
+int main()
+{
+    char cadena[10] = {'h', 'o', 'l', 'a', '\0'};
+    char a = 'o';
+    char b = 'x';
+
+    int array[10] = {2,5,9,7,9};
+    int mayor;
+
+    int retorno;
+	Alumno estudiantes[3];
+
+    printf("Cadena: %s\n", cadena);
+    printf("Cantidad de cambios: %d\n", funcionUno(cadena, a, b));
+    printf("Cadena: %s\n", cadena);
+
+    if(funcionDos(array, &mayor, 10)){
+        printf("El mayor numero es: %d\n", mayor);
+    }
+
+    for(int i=0;i<3;i++)
+	{
+		estudiantes[i]=funcionTres(&retorno);
+		if(!retorno)
+		{
+			printf("Todo ok\n");
+		}
+	}
+
+	for(int i=0;i<3;i++)
+	{
+		printf("nombre: %s\n",estudiantes[i].nombre);
+	}
+
+    return 0;
+}
+
+int funcionUno(char* pChar, char a, char b){
+
+    int retorno = -1;
+
+    if(pChar != NULL){
+        retorno = 0;
+        for(int i = 0; i < strlen(pChar); i++){
+            if(*(pChar+i) == a){//es lo mismo que poner pChar[i] == a
+               *(pChar+i) = b;//es lo mismo que poner pChar[i] = b;
+               retorno ++;
+            }
+        }
+    }
+
+    return retorno;
+}
+
+int funcionDos(int* arrayInt, int* pInt, int len){
+
+    int retorno = -1;
+    int flag = 0;
+    int mayor;
+
+
+    if(pInt != NULL){
+        for(int i = 0; i < len; i++){
+            if(flag == 0 || mayor < *(arrayInt+i)){
+               mayor = *(arrayInt+i);
+               flag = 1;
+            }
+        }
+    }
+
+    *pInt = mayor;
+
+    return retorno;
+}
+
+Alumno funcionTres(int* retorno){
+
+    Alumno aux;
+    int auxRetorno;
+
+    if(retorno != NULL){
+
+        auxRetorno = -1;
+        puts("Ingrese el legajo");
+        scanf("%d", &aux.legajo);
+        puts("Ingrese el nombre");
+    	fflush(stdin);
+		scanf("%s", aux.nombre);
+        puts("Ingrese la edad");
+        scanf("%d", &aux.edad);
+    }
+
+    if(aux.legajo > 0){
+        auxRetorno = 0;
+        *retorno = auxRetorno;
+    }
+
+    return aux;
+}
+
+int funcionCuatro(Alumno* arrayAlumno, int len){
+
+    int retorno = -1;
+
+    if(arrayAlumno != NULL && len > 0){
+
+        for(int i = 0; i < len; i++){
+            puts("Ingrese el legajo");
+            scanf("%d", *(arrayAlumno+i)->legajo);
+            puts("Ingrese el nombre");
+        	fflush(stdin);
+    		scanf("%s", &(*(arrayAlumno+i)).nombre);
+            puts("Ingrese la edad");
+            scanf("%d", &(*arrayAlumno+i).edad);
+        }
+        retorno = 0;
+    }
+    return retorno;
+}
+ */

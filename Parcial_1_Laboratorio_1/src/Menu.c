@@ -79,7 +79,7 @@ int hardcodeAddDataMenu(Censista* listCensista, int lenCensista, Date* listDate,
 int singUpCensistaMenu(Censista* listCensista, int lenCensista,	char name[], char lastName[], int age, int day, int month, int year,
 		char street[], int streetNumber, char neighborhood[], Date* listDate, int lenDate, Address* listAddress, int lenAddress){
 
-	int retorno = -1;//FALSE
+	int retorno = -1;
 	int id;
 	int indexAddress;
 	int indexDate;
@@ -98,7 +98,7 @@ int singUpCensistaMenu(Censista* listCensista, int lenCensista,	char name[], cha
 		addAddress(listAddress, lenAddress, id, street, streetNumber, neighborhood, indexAddress);
 
 		if(addCensista(listCensista, lenCensista, id, name, lastName, listDate[indexDate], age, listAddress[indexAddress]) == 0){
-			retorno = 0;//TRUE
+			retorno = 0;
 		}
 	}
 	return retorno;
@@ -107,7 +107,7 @@ int singUpCensistaMenu(Censista* listCensista, int lenCensista,	char name[], cha
 int singUpZoneMenu(Zone* listZone, int lenZone,	char nameLocation[], char street_1[], char street_2[],
 		char street_3[], char street_4[], Location* listLocation, int lenLocation){
 
-	int retorno = -1;//FALSE
+	int retorno = -1;
 	int id;
 	int id_Location;
 
@@ -119,7 +119,7 @@ int singUpZoneMenu(Zone* listZone, int lenZone,	char nameLocation[], char street
 		if(addLocation(listLocation, lenLocation, nameLocation, street_1, street_2, street_3, street_4, id_Location) == 0){
 			id = idZone();
 			if(addZone(listZone, lenZone, id, id_Location) == 0){
-			retorno = 0;//TRUE
+			retorno = 0;
 			}
 		}
 	}
@@ -178,23 +178,23 @@ int addDataLocationMenu(Location* listLocation, int lenLocation, int index){
 //MODIFICACIONES
 int modificationsCensistaMenu(Censista* listCensista, int lenCensista,	char name[], char lastName[], int age, int id, int option){
 
-	int retorno = -1;//FALSE
+	int retorno = -1;
 
 	if(listCensista != NULL && lenCensista > 0 && name != NULL && lastName != NULL && age > 0 && option > 0){
 		switch(option){
 			case 1:
 				if(modifyCensistaName(listCensista, lenCensista, id, name) == 0){
-					retorno = 0;//TRUE
+					retorno = 0;
 				}
 				break;
 			case 2:
 				if(modifyCensistaLastName(listCensista, lenCensista, id, lastName) == 0){
-					retorno = 0;//TRUE
+					retorno = 0;
 				}
 				break;
 			case 3:
 				if(modifyCensistaAge(listCensista, lenCensista, id, age) == 0){
-					retorno = 0;//TRUE
+					retorno = 0;
 				}
 				break;
 		}
@@ -671,9 +671,10 @@ int cantidadCensistasEstadoActivoZonaPendiente(Zone* listZone, int lenZone, Cens
 	return total;
 }
 
+
 int promedioDeCensosPorCensista(Zone* listZone, int lenZone, Censista* listCensista, int lenCensista, Location* listLocation, int lenLocation){
 
-	int retorno = -1;//FALSE
+	int retorno = -1;
 	int total;
 	float promedio;
 	int contador = 0;

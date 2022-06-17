@@ -38,7 +38,7 @@ int initCensista(Censista* list, int len){
 int addCensista(Censista* list, int len, int id, char name[],
 		char lastName[], Date dateBirth, int age, Address adress){
 
-	int retorno = -1;//FALSE
+	int retorno = -1;
 	int index;
 	Censista aux;
 
@@ -58,7 +58,7 @@ int addCensista(Censista* list, int len, int id, char name[],
 		for(int i = 0; i < len; i++){
 			if(i == index){
 				list[i] = aux;
-				retorno = 0;//TRUE
+				retorno = 0;
 			}
 		}
 	}
