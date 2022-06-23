@@ -199,16 +199,3 @@ int printLocation(Location location){
 	}
 	return retorno;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

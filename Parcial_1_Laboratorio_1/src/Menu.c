@@ -739,17 +739,3 @@ int printPromedioDeCensosPorCensista(Censista censista, Zone zone, Location loca
 
 	return retorno;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

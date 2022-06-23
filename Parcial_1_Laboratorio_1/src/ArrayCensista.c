@@ -437,23 +437,3 @@ int printCensista(Censista censista){
 	return retorno;
 }
 
-//INFORMES
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

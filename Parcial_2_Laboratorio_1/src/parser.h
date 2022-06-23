@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "LinkedList.h"
+#include "../inc/LinkedList.h"
 #include "Passenger.h"
 
+//PARSEAR
 /** \brief Parsea los datos los datos de los pasajeros desde el archivo data.csv (modo texto).
  *
  * \param path char*
@@ -10,11 +11,7 @@
  * \return int
  *
  */
-int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger)
-{
-
-    return 1;
-}
+int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger);
 
 /** \brief Parsea los datos los datos de los pasajeros desde el archivo data.csv (modo binario).
  *
@@ -23,8 +20,10 @@ int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger)
  * \return int
  *
  */
-int parser_PassengerFromBinary(FILE* pFile , LinkedList* pArrayListPassenger)
-{
+int parser_PassengerFromBinary(FILE* pFile , LinkedList* pArrayListPassenger);
 
-    return 1;
-}
+//BUSCAR
+int parser_getLastId(char* path, char* lastId);
+
+//GUARDAR
+int parser_setLastId(char* path);
