@@ -99,3 +99,5 @@ int controller_findIndexById(LinkedList* pArrayListPassenger, int id);
 //OTROS
 void controller_generateCode(char flycode[]);
 
+int controller_Menu(LinkedList* pArrayListPassenger);
+

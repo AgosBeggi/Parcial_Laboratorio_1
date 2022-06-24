@@ -1,0 +1,11 @@
+id,name,lastname,price,flycode,typePassenger,statusFlight,millas
+1,Lou,González,10000,BA2491A,FirstClass,Aterrizado,100
+2,Ulrike,Muñoz,25000,IB0800A,ExecutiveClass,Aterrizado,250
+3,Brade,Rojas,20000,MM0987B,FirstClass,En Horario,200
+4,Kimbell,Díaz,50000,BA2491A,FirstClass,Aterrizado,500
+5,Sheelagh,Pérez,18000,IB0800A,FirstClass,Demorado,180
+6,Gayle,Soto,30000,MM0987B,EconomyClass,En Horario,300
+7,Kimberlee,Contreras,33000,BA2491A,FirstClass,En Vuelo,330
+8,Henrieta,Silva,30000,IB0800A,ExecutiveClass,Aterrizado,300
+9,Jeanine,Martínez,18000,MM0987B,FirstClass,En Horario,180
+10,Aggie,Sepúlveda,15000,BA2491A,EconomyClass,Aterrizado,150

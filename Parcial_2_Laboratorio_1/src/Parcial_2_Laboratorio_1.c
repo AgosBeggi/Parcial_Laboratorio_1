@@ -37,8 +37,10 @@ int main(){
    	int flag_Add = 0;
    	int flag_Save = 0;
 
+   	int cantidad;
+
     char messageOk[250];
-	strcpy(messageOk, "Operación exitosa");
+	strcpy(messageOk, "Operacion exitosa");
 	char messageError[250];
 	strcpy(messageError, "Error, intene nuevamente\n");
 
@@ -49,7 +51,7 @@ int main(){
   	puts("-----------------------------------------------------------------------------------------------------");
 
     do{
-    	puts("INGRESE UNA OPCIÓN\n");
+    	puts("INGRESE UNA OPCION\n");
 
 		puts("1. Cargar los datos de los pasajeros desde el archivo data.csv (modo texto)");
 		puts("2. Cargar los datos de los pasajeros desde el archivo data.csv (modo binario)");
@@ -60,8 +62,11 @@ int main(){
 		puts("7. Ordenar pasajeros");
 		puts("8. Guardar los datos de los pasajeros en el archivo data.csv (modo texto).");
 		puts("9. Guardar los datos de los pasajeros en el archivo data.csv (modo binario).");
+		//SEGUNDA PARTE
+		puts("10. Informes");
+
 		if(flag_Save == 1){
-			puts("10. Salir");
+			puts("11. Salir");
 		}
 		puts("-----------------------------------------------------------------------------------------------------");
 		getInt("", &option);
@@ -191,6 +196,14 @@ int main(){
 				}
 				break;
             case 10:
+            	cantidad = controller_Menu(listaPasajeros);
+            	if(cantidad > 0){
+					puts("-----------------------------------------------------------------------------------------------------");
+					printf("%s\n", messageOk);
+					puts("-----------------------------------------------------------------------------------------------------");
+				}
+			   break;
+            case 11:
 			   //SALIR
             	puts("Gracias.\n");
 			   break;
@@ -199,7 +212,7 @@ int main(){
             	puts("-----------------------------------------------------------------------------------------------------");
             	break;
         }
-    }while(option != 10);
+    }while(option != 11);
 
     return 0;
 }

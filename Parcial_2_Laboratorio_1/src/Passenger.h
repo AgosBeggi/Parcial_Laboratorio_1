@@ -79,6 +79,14 @@ int Passenger_compareByTipo(void* this, void* this2);
 
 int Passenger_compareByEstado(void* this, void* this2);
 
+int Passenger_TotalPassengerType(void* element);
+
+int Passenger_tipo(int* tipo);
+
+int Passenger_PassengerType(void* element);
+
+int Passenger_tipoMenu();
+
 //Passenger* Passenger_copy(Passenger* this);
 
 #endif /* PASSENGER_H_ */

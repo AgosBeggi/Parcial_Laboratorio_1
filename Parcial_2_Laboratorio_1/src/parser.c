@@ -3,8 +3,6 @@
 //PARSEAR
 int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger){
 
-	puts("entro a parser_PassengerFromText");
-
 	int retorno = -1;
 	int items;
 

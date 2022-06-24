@@ -381,3 +381,49 @@ void controller_generateCode(char flycode[]){
 
 	strncpy(flycode, auxCharCode, 10);
 }
+
+int controller_Menu(LinkedList* pArrayListPassenger){
+
+	int cantidad = -1;
+	int criterio;
+	int tipo;
+
+	char aux_TipoPasajero[50];
+
+	LinkedList* pArrayListPassenger2;
+
+	puts("INFORMES\n");
+	puts("1. Pasajeros por clase.");
+	puts("2. Generar archivo de vuelos");
+	puts("3. Calcular millas acumuladas");
+	puts("-----------------------------------------------------------------------------------------------------");
+	getInt("", &criterio);
+	while(criterio < 1 || criterio > 3){
+		printf("Opción incorrecta, vuelva a intentarlo.\n");
+	}
+	switch(criterio){
+		case 1:
+			tipo = Passenger_tipoMenu();
+			cantidad = ll_count(pArrayListPassenger, Passenger_TotalPassengerType);
+			if(cantidad > 0){
+				Passenger_translateTypeIntToStr(tipo, aux_TipoPasajero);
+				printf("La cantidad de pasajeros del tipo %s es: %d", aux_TipoPasajero, cantidad);
+			}
+			break;
+		case 2:
+			//LinkedList*
+			pArrayListPassenger2 = ll_filter(pArrayListPassenger, Passenger_PassengerType);
+			if(pArrayListPassenger2 != NULL){
+				controller_saveAsText("prueba2.csv" , pArrayListPassenger2);
+			}
+			cantidad = 0;
+			break;
+		case 3:
+			//LinkedList* ll_map(LinkedList* this, void (*fn)(void* element))
+			cantidad = 0;
+			break;
+	}
+
+
+	return cantidad;
+}

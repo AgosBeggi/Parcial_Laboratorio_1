@@ -501,3 +501,43 @@ int Passenger_compareByEstado(void* this, void* this2){
 	}
 	return retorno;
 }
+
+int Passenger_tipoMenu(){
+
+	int tipoPasajero = 0;
+
+	do{
+		printf("Indique el sipo de pasajero");
+		getInt("\nTIPO DE PASAJERO:\n 1. FirstClass\n 2. ExecutiveClass\n 3. EconomyClass\n", &tipoPasajero);
+		if(tipoPasajero < 1 || tipoPasajero > 3){
+			printf("Error, intene nuevamente\n");
+		}
+	}while(tipoPasajero != 1 && tipoPasajero != 2 && tipoPasajero != 3);
+
+	return tipoPasajero;
+}
+
+
+int Passenger_TotalPassengerType(void* element){
+
+	int tipoPasajero = 0;
+
+	if(element != NULL){
+		tipoPasajero = Passenger_tipoMenu();
+		Passenger_getTipoPasajero((Passenger*) element, &tipoPasajero);
+	}
+	return tipoPasajero;
+}
+
+int Passenger_PassengerType(void* element){
+
+	int tipoPasajero = 0;
+
+	if(element != NULL){
+		tipoPasajero = Passenger_tipoMenu();
+		Passenger_getTipoPasajero((Passenger*) element, &tipoPasajero);
+	}
+
+	return tipoPasajero;
+}
+
