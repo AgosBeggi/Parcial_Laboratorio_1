@@ -403,7 +403,17 @@ int controller_Menu(LinkedList* pArrayListPassenger){
 	}
 	switch(criterio){
 		case 1:
+			controller_Count();//llenar con las listas que van
+
+
 			tipo = Passenger_tipoMenu();
+			/*
+			 * crear una funcion que muestre el menu cin el listado, esa llama a ll_count y dentro de esa
+			 * se llama a la fn criterio. En cada iteración de count se le pasa el elementro a criterio.
+			 * Esta retorna un entero, en este caso el tipo de pasajero. Count recibe ese entero y lo va
+			 * acumulando y retorna el total acumulado de lo que retorna criterio.
+			 * En el caso de querer otro criterio, se debe hacer una fn por cada criterio que uno desee
+			 */
 			cantidad = ll_count(pArrayListPassenger, Passenger_TotalPassengerType);
 			if(cantidad > 0){
 				Passenger_translateTypeIntToStr(tipo, aux_TipoPasajero);
@@ -420,6 +430,13 @@ int controller_Menu(LinkedList* pArrayListPassenger){
 			break;
 		case 3:
 			//LinkedList* ll_map(LinkedList* this, void (*fn)(void* element))
+			/*
+			 * recibe una lista y una fn, se iteran todos los elementos de la lista y de los
+			 * pasan a la fn.
+			 * La fn podrá realizar un calculo con el elemento recibido  para calrcular las millas.
+			 * Generar una lista nueva con el campo de millas, que puestre los elementos de la entidad pasajeros y una
+			 * nueva entidad que
+			 */
 			cantidad = 0;
 			break;
 	}
@@ -427,3 +444,81 @@ int controller_Menu(LinkedList* pArrayListPassenger){
 
 	return cantidad;
 }
+
+int controller_Count(char* path ,LinkedList* pArrayList, LinkedList* pArrayMillas){
+
+	int retorno = -1;
+	int count = 0;
+
+	FILE* pFile;
+
+	if(path != NULL && pArrayList != NULL && pArrayMillas != NULL){
+		pFile = fopen(path, "r");
+		count = ll_count(pArrayList, fn_contador);
+	}
+	if(count > 0){
+		printf("La cantidad de pasajeros del tipo %s es: %d",count);
+	}
+	fclose(pFile);
+	return retorno;
+}
+
+int Controller_Filter(char* path ,LinkedList* pArrayList, LinkedList* pArrayMillas){
+
+	int retorno = -1;
+	int count = 0;
+
+	FILE* pFile;
+
+	if(path != NULL && pArrayList != NULL && pArrayMillas != NULL){
+		pFile = fopen(path, "r");
+		count = ll_count(pArrayList, fn_filtro);
+	}
+
+	fclose(pFile);
+	return retorno;
+}
+
+int Passenger_ShowPassengerType(LinkedList* pArrayList, LinkedList* pArrayMillas/*Passenger* this,LinkedList* pArray*/){
+
+	int retorno = -1;
+	int id;
+	char nombre [50];
+	char apellido [50];
+	float precio;
+	int tipoPasajero;
+	char codigoVuelo[10];
+	int estado;
+	int id_Passenger;
+	int millas;
+
+	Millas* millas_Name;
+
+	for(){
+
+	}
+
+	ll_get(pArrayList, index);
+
+	Passenger_getId(this, id);
+	Passenger_getNombre(this, nombre);
+	Passenger_getApellido(this, apellido);
+	Passenger_getPrecio(this, precio);
+	Passenger_getTipoPasajero(this, tipoPasajero);
+	Passenger_getCodigoVuelo(this, codigoVuelo);
+	Passenger_getEstado(this, estado);
+
+	Millas_getId(this, id_Passenger);
+
+	LibroGetIdEMillas(this, &editorialId);
+	editorialName = bringEditorials(pArrayListEditorials, editorialId);
+	EDI_getEditorialName(editorialName, editorial);
+
+	printf("ID \tNOMBRE \t\tAPELLIDO  \tPRECIO \t\tCODIGO \t\tTIPO  \t\tESTADO \t\tMILLAS\n");
+	printf("\t\t\t|%4d  |%30s   | %22s         |   %9.2f  |    %18s   |\n",id,title,author,price,editorial);
+
+
+
+	return retorno;
+}
+

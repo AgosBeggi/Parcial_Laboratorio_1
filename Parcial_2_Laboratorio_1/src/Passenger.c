@@ -529,15 +529,3 @@ int Passenger_TotalPassengerType(void* element){
 	return tipoPasajero;
 }
 
-int Passenger_PassengerType(void* element){
-
-	int tipoPasajero = 0;
-
-	if(element != NULL){
-		tipoPasajero = Passenger_tipoMenu();
-		Passenger_getTipoPasajero((Passenger*) element, &tipoPasajero);
-	}
-
-	return tipoPasajero;
-}
-
