@@ -531,6 +531,7 @@ int Passenger_PassengerType1(void* element){
 	return retorno;
 }
 
+<<<<<<< HEAD
 int Passenger_PassengerType2(void* element){
 
 	int tipoPasajero = 0;
@@ -558,3 +559,5 @@ int Passenger_PassengerType3(void* element){
 	}
 	return retorno;
 }
+=======
+>>>>>>> dfe91bc242991b2de07f0ddcbc0b775246c50bca

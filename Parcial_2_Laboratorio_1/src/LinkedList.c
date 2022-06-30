@@ -496,19 +496,35 @@ int ll_count(LinkedList* this, int (*fn)(void*)){
 	 if(this != NULL && fn != NULL){
 		 for(int i = 0; i < ll_len(this); i++){
 			 auxElement = ll_get(this, i);
+<<<<<<< HEAD
 			 if(auxElement != NULL){
 				  returnAux = fn(auxElement);
 				 if(returnAux > 0){
 					 count++;
 				 }
+=======
+			 returnAux = fn(auxElement);
+			 if(returnAux > 0){
+				 count = count + returnAux;
+>>>>>>> dfe91bc242991b2de07f0ddcbc0b775246c50bca
 			 }
 		 }
 	 }
 	 return count;
 }
 
-LinkedList* ll_filter(LinkedList* this, int (*fn)(void* element)){
+int LibroMostrarLibroMinotauro(eLibro* this,LinkedList* pArrayListEditorials)
+{
+	Editorial* editorialName;
+	int id;
+	char title [MAX_CHAR];
+	char author [MAX_CHAR];
+	float price;
+	int editorialId;
+	char editorial[MAX_CHAR];
+	int state;
 
+<<<<<<< HEAD
 	LinkedList* list = NULL;
 	void* auxElement = NULL;
 
@@ -541,7 +557,390 @@ LinkedList* ll_map(LinkedList* this, void* (*fn)(void*)){
 					ll_add(list, auxElement);
 				}
 			}
+=======
+	state = -1;
+
+	LibroGetID(this, &id);
+	LibroGetTitulo(this, title);
+	LibroGetAutor(this, author);
+	LibroGetPrecio(this, &price);
+	LibroGetIdEditorial(this, &editorialId);
+	editorialName = bringEditorials(pArrayListEditorials, editorialId);
+	EDI_getEditorialName(editorialName, editorial);
+
+	printf("\t\t\t|%4d  |%30s   | %22s         |   %9.2f  |    %18s   |\n",id,title,author,price,editorial);
+
+	state = -1;
+
+	return state;
+}
+
+
+int LibroMostrarListaMinotauro(LinkedList* minotaurosBooks, LinkedList* pArrayListEditorials)
+{
+	eLibro* aux;
+	int state;
+	int booksQty;
+
+	state = -1;
+
+	if(minotaurosBooks != NULL)
+	{
+		booksQty = ll_len(minotaurosBooks);
+
+		printf("\n\n\t\t\t|  ID  |              Title              |             Author             |    Price     |         Editorial       |\n");
+		printf("\t\t\t|______|_________________________________|________________________________|______________|_________________________|\n");
+
+		for(int i = 0; i < booksQty; i++)
+		{
+			aux = ll_get(minotaurosBooks, i);
+
+			LibroMostrarLibroMinotauro(aux,pArrayListEditorials);
+>>>>>>> dfe91bc242991b2de07f0ddcbc0b775246c50bca
+		}
+		state = 0;
+	}
+
+	return state;
+}
+
+int libros_Contados(void* unLibro){
+	int isOk;
+	eLibro* auxiliarLibro;
+	float precio;
+
+	isOk = 0;
+
+	if(unLibro != NULL)
+	{
+		auxiliarLibro = (eLibro*)unLibro;
+
+		if(!LibroGetPrecio(auxiliarLibro, &precio))
+		{
+			if(precio > 500)
+			{
+				isOk = 1;
+				puts("libro +");
+
+			}
 		}
 	}
-	return list;
+
+	return isOk;
+}
+
+int ll_filter(LinkedList* this, int (*pFunc)(void*)){
+
+	int i;
+	void* pAuxiliar;
+	int retornoFuncionCriterio;
+	int retorno = -1;
+
+	if(this != NULL && pFunc != NULL)
+	{
+		for(i = ll_len(this)-1; i >= 0; i--)
+		{
+			pAuxiliar = ll_get(this, i);
+			retornoFuncionCriterio = pFunc(pAuxiliar);
+			if(!retornoFuncionCriterio)
+			{
+				retorno = ll_remove(this, i);
+			}
+		}
+	}
+	return retorno;
+}
+
+LinkedList* ll_filter(LinkedList* this,int (*pfunc)(void*))
+{
+  //retorna una lista
+  //itera el objeto para filtrar por medio de la funcion pasada como parametro
+  LinkedList* aux = NULL;
+  void* element = NULL;
+  int i;
+  int tam;
+
+  if(this!=NULL)
+    {
+      aux = ll_newLinkedList();
+      tam = ll_len(this);
+      if(aux!=NULL)
+	{
+	  for(i=0;i<tam;i++)
+	    {
+	      element = ll_get(this,i);
+	      if(pfunc(element)==1)
+		{
+		  ll_add(aux,element);
+		}
+	    }
+	}
+    }
+  return aux;
+}
+
+LinkedList* ll_filter(LinkedList* this, int (*fn)(void* element))
+{
+	LinkedList* Aux;
+	int catcher;
+	LinkedList* minotaurosBook;
+
+	minotaurosBook = ll_newLinkedList();
+
+	if(this != NULL)
+	{
+		for(int i = 0; i < ll_len(this); i++)
+		{
+			Aux = ll_get(this,i);
+			catcher = fn(Aux);
+
+			if(catcher == 1)
+			{
+				ll_add(minotaurosBook, Aux);
+
+			}
+		}
+	}
+
+	return minotaurosBook;
+}
+
+int controllerMinotauroFiltro (LinkedList* booksList, LinkedList* editorialsList)
+{
+	int state;
+	LinkedList* minotaurosBookList;
+
+	state = -1;
+
+	if(booksList != NULL && editorialsList != NULL)
+	{
+	  minotaurosBookList = ll_filter(booksList,EDI_criterio);
+	  if(minotaurosBookList != NULL)
+	  {
+		  LibroMostrarListaMinotauro(minotaurosBookList, editorialsList);
+		  controllerGuardarComoTexto("LibrosEditorialMinotauro.csv", minotaurosBookList, editorialsList);
+	  }
+	  state = 0;
+	}
+
+	return state;
+}
+
+int librosFiltrarPearson(void* unLibro)
+{
+	int isOk;
+	eLibro* auxiliarLibro;
+	int idEditorial;
+	float precioLibro;
+	int acumulador=0;
+
+	isOk = 0;
+
+	if(unLibro != NULL)
+	{
+		auxiliarLibro = (eLibro*)unLibro;
+
+		if(!LibroGetIdEditorial(auxiliarLibro, &idEditorial))
+		{
+			if(idEditorial == 3 && !LibroGetPrecio(auxiliarLibro, &precioLibro))
+			{
+				acumulador += precioLibro;
+				puts("Acumule un libro pearson");
+				isOk = 1;
+			}
+		}
+
+		printf("el acumulador es : %f", acumulador);
+	}
+
+
+
+	return isOk;
+}
+
+
+int ll_map(LinkedList* this, int(*pFunc)(void*)){
+
+	int retorno = -1;
+	void* pAuxiliar;
+
+	if(this != NULL && pFunc != NULL)
+	{
+		for(int i = 0; i < ll_len(this); i++)
+		{
+			pAuxiliar = ll_get(this, i);
+			if(!pFunc(pAuxiliar))
+			{
+				retorno = 0;
+			}
+		}
+	}
+	return retorno;
+}
+
+LinkedList* ll_map(LinkedList* this, void* (*pFunc)(void*))
+{
+  LinkedList* Aux = NULL;
+  void* element= NULL;
+  int i;
+  int tam = ll_len(this);
+    if(this!=NULL && tam>0 )
+      {
+	Aux = ll_newLinkedList();
+	if(Aux!=NULL)
+	  {
+	    for(i=0;i<tam;i++)
+	      {
+		element = ll_get(this,i);
+		  if(element!=NULL)
+		    {
+		      element = pFunc(element);
+		      ll_add(Aux,element);
+		    }
+	      }
+	  }
+      }
+    return Aux;
+}
+
+int ll_map(LinkedList* this, int (*fn)(void* element))
+{
+	void* catcher;
+	int state;
+
+	state = -1;
+
+	if(this != NULL)
+	{
+		for(int i = 0; i < ll_len(this); i++)
+		{
+			catcher = ll_get(this,i);
+			if(fn(catcher)==0)
+			{
+				state = 0;
+			}
+		}
+	}
+
+	return state;
+}
+
+int controllerGuardarMapeoTexto(char* path , LinkedList* pArrayListBooks, LinkedList* pArrayListEditorialsList)
+{
+	int state;
+	FILE* pFile;
+
+	state = -1;
+
+	if(path != NULL && pArrayListBooks != NULL)
+	{
+		pFile = fopen(path,"w");
+
+		if(pFile != NULL)
+		{
+			parserGuardarComoMap(pFile, pArrayListBooks,pArrayListEditorialsList);
+			state = 0;
+		}
+			fclose(pFile);
+	}
+
+	return state;
+}
+
+int controllerLlamarMapeado(LinkedList* pArrayListBooks, LinkedList* pArrayListEditorialsList)
+{
+	int state;
+
+	state = -1;
+
+	if(pArrayListBooks != NULL && pArrayListEditorialsList != NULL)
+	{
+		 ll_map(pArrayListBooks, EDIBOOKPRICE_criterio);
+		 controllerGuardarMapeoTexto("mapeado.csv", pArrayListBooks, pArrayListEditorialsList);
+		 state = 0;
+	}
+
+	return state;
+}
+
+LinkedList* ll_map(LinkedList* this, void* (pFunc)(void*))
+{
+	int i;
+	int len;
+    void* pElement;
+    LinkedList* mapeado = NULL;
+
+    if(this!=NULL && pFunc!=NULL)
+    {
+        mapeado = ll_newLinkedList();
+        len=ll_len(this);
+
+        for (i = 0; i < len; i++)
+        {
+            pElement = ll_get(this, i);//busco todos los elementos de la linkedlist
+            pElement = pFunc(pElement);//se los paso a mi funcion
+
+            if(pElement!=NULL)
+            {
+                ll_add(mapeado, pElement);//los agrego a mi nueva linkedlist
+            }
+        }
+    }
+
+    return mapeado;
+}
+
+int controller_mapeadoDescuentos(LinkedList* pArrayListLibro)
+{
+	int isOk = -1;
+
+	if(pArrayListLibro!=NULL)
+	{
+		pArrayListLibro=ll_map(pArrayListLibro,libro_descuentos);
+		printf("Se ha aplicado el descuento con exito");
+		isOk=0;
+	}
+	return isOk;
+}
+
+//---------------------------------------------MAPEO---------------------------------------------
+void* libro_descuentos(void* libros)
+{
+	eLibro* pElement = NULL;
+	int auxId;
+	float auxPrecio;
+	float newPrecio=0;
+	char auxNombre[128];
+
+	if(libros!=NULL)
+	{
+		pElement= (eLibro*) libros;
+		if(!libro_getEditorialId(pElement,&auxId))
+		{
+			BuscarNombreEditorial(auxId,auxNombre);
+			if(stricmp(auxNombre,"Planeta")==0)
+			{
+				libro_getPrecio(pElement,&auxPrecio);
+				if(auxPrecio>=300)
+				{
+					newPrecio=auxPrecio-(auxPrecio*20/100);
+					libro_setPrecio(pElement,newPrecio);
+				}
+			}
+			else
+			{
+				if(stricmp(auxNombre,"SIGLO XXI EDITORES")==0)
+				{
+					libro_getPrecio(pElement,&auxPrecio);
+					if(auxPrecio<=200)
+					{
+						newPrecio=auxPrecio-(auxPrecio*10/100);
+						libro_setPrecio(pElement,newPrecio);
+					}
+				}
+			}
+		}
+	}
+
+	return pElement;
 }
