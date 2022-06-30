@@ -490,33 +490,57 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order){
 int ll_count(LinkedList* this, int (*fn)(void*)){
 
 	int returnAux = -1;
-	int count1 = 0;
-
+	int count = 0;
 	void* auxElement = NULL;
 
 	 if(this != NULL && fn != NULL){
 		 for(int i = 0; i < ll_len(this); i++){
 			 auxElement = ll_get(this, i);
-			 returnAux = fn(auxElement);
-			 if(returnAux > 0){
-				 count1++;
+			 if(auxElement != NULL){
+				  returnAux = fn(auxElement);
+				 if(returnAux > 0){
+					 count++;
+				 }
 			 }
 		 }
 	 }
-	 return count1;
+	 return count;
 }
 
 LinkedList* ll_filter(LinkedList* this, int (*fn)(void* element)){
 
-	LinkedList* list = ll_newLinkedList();
-	int returnAux = -1;
+	LinkedList* list = NULL;
 	void* auxElement = NULL;
 
-	for(int i = 0; i < ll_len(this); i++){
-		auxElement = ll_get(this, i);
-		returnAux = fn(auxElement);
-		if(returnAux > 0){
-			ll_add(list, auxElement);
+	if(this != NULL && fn != NULL){
+		list = ll_newLinkedList();
+		if(list != NULL){
+			for(int i = 0; i < ll_len(this); i++){
+			auxElement = ll_get(this, i);
+				if(fn(auxElement) == 1){
+					ll_add(list, auxElement);
+				}
+			}
+		}
+	}
+	return list;
+}
+
+LinkedList* ll_map(LinkedList* this, void* (*fn)(void*)){
+
+	LinkedList* list = NULL;
+	void* auxElement= NULL;
+
+	if(this != NULL && fn != NULL){
+		list = ll_newLinkedList();
+		if(list != NULL){
+			for(int i = 0; i < ll_len(this);i++){
+				auxElement = ll_get(this,i);
+				if(auxElement != NULL){
+					auxElement = fn(auxElement);
+					ll_add(list, auxElement);
+				}
+			}
 		}
 	}
 	return list;

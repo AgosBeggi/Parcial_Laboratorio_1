@@ -385,10 +385,10 @@ void controller_generateCode(char flycode[]){
 int controller_Menu(LinkedList* pArrayListPassenger){
 
 	int cantidad = -1;
-	int criterio;
-	int tipo;
-
+	int option;
+	int type;
 	char aux_TipoPasajero[50];
+	int count = 0;
 
 	LinkedList* pArrayListPassenger2;
 
@@ -397,26 +397,39 @@ int controller_Menu(LinkedList* pArrayListPassenger){
 	puts("2. Generar archivo de vuelos");
 	puts("3. Calcular millas acumuladas");
 	puts("-----------------------------------------------------------------------------------------------------");
-	getInt("", &criterio);
-	while(criterio < 1 || criterio > 3){
+	getInt("", &option);
+	while(option < 1 || option > 3){
 		printf("Opción incorrecta, vuelva a intentarlo.\n");
 	}
-	switch(criterio){
+	switch(option){
 		case 1:
-			tipo = Passenger_tipoMenu();
-			cantidad = ll_count(pArrayListPassenger, Passenger_TotalPassengerType);
-			if(cantidad > 0){
-				Passenger_translateTypeIntToStr(tipo, aux_TipoPasajero);
-				printf("La cantidad de pasajeros del tipo %s es: %d", aux_TipoPasajero, cantidad);
+			type = Passenger_typeMenu();
+			switch(type){
+			case 1:
+				count = ll_count(pArrayListPassenger, Passenger_PassengerType1);
+				break;
+			case 2:
+				count = ll_count(pArrayListPassenger, Passenger_PassengerType2);
+				break;
+			case 3:
+				count = ll_count(pArrayListPassenger, Passenger_PassengerType3);
+				break;
 			}
+			Passenger_translateTypeIntToStr(type, aux_TipoPasajero);
+			printf("La cantidad de pasajeros del tipo %s es: %d\n", aux_TipoPasajero, count);
+
 			break;
 		case 2:
 			//LinkedList*
-			pArrayListPassenger2 = ll_filter(pArrayListPassenger, Passenger_PassengerType);
-			if(pArrayListPassenger2 != NULL){
-				controller_saveAsText("prueba2.csv" , pArrayListPassenger2);
-			}
-			cantidad = 0;
+//			pArrayListPassenger2 = ll_filter(pArrayListPassenger, Passenger_PassengerType);
+//			if(pArrayListPassenger2 != NULL){
+//				controller_saveAsText("prueba2.csv" , pArrayListPassenger2);
+//			}
+//			cantidad = 0;
+			//HASTA ACÁ ENTREGUÉ
+
+
+			//controller_ListPassenger(pArrayListPassenger2);
 			break;
 		case 3:
 			//LinkedList* ll_map(LinkedList* this, void (*fn)(void* element))
@@ -427,3 +440,5 @@ int controller_Menu(LinkedList* pArrayListPassenger){
 
 	return cantidad;
 }
+
+

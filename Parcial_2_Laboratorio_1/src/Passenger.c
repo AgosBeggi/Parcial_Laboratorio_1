@@ -502,7 +502,7 @@ int Passenger_compareByEstado(void* this, void* this2){
 	return retorno;
 }
 
-int Passenger_tipoMenu(){
+int Passenger_typeMenu(){
 
 	int tipoPasajero = 0;
 
@@ -513,31 +513,48 @@ int Passenger_tipoMenu(){
 			printf("Error, intene nuevamente\n");
 		}
 	}while(tipoPasajero != 1 && tipoPasajero != 2 && tipoPasajero != 3);
-
 	return tipoPasajero;
 }
 
 
-int Passenger_TotalPassengerType(void* element){
+int Passenger_PassengerType1(void* element){
 
 	int tipoPasajero = 0;
+	int retorno = -1;
 
 	if(element != NULL){
-		tipoPasajero = Passenger_tipoMenu();
 		Passenger_getTipoPasajero((Passenger*) element, &tipoPasajero);
+		if(tipoPasajero == 1){
+			retorno = tipoPasajero;
+		}
 	}
-	return tipoPasajero;
+	return retorno;
 }
 
-int Passenger_PassengerType(void* element){
+int Passenger_PassengerType2(void* element){
 
 	int tipoPasajero = 0;
+	int retorno = -1;
 
 	if(element != NULL){
-		tipoPasajero = Passenger_tipoMenu();
 		Passenger_getTipoPasajero((Passenger*) element, &tipoPasajero);
+		if(tipoPasajero == 2){
+			retorno = tipoPasajero;
+		}
 	}
-
-	return tipoPasajero;
+	return retorno;
 }
 
+int Passenger_PassengerType3(void* element){
+
+	int tipoPasajero = 0;
+	int retorno = -1;
+
+	if(element != NULL){
+		Passenger_getTipoPasajero((Passenger*) element, &tipoPasajero);
+		if(tipoPasajero == 3){
+			retorno = tipoPasajero;
+		}
+	}
+	return retorno;
+}
